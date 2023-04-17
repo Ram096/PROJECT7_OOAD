@@ -1,3 +1,10 @@
+// OOAD Spring 2023 Project 6
+// Dough Masters - Pizza Store
+// Gustavo Guijarro
+// Ramy Kassam
+// Zach Remer
+// Welcome
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
