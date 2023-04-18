@@ -53,5 +53,34 @@ public abstract class Staff implements SysOut {
 }
 
 class Manager extends Staff {
-
+    Manager() {
+        super();
+        type = Enums.StaffType.Manager;
+        salary = 120;
+    }
+    //implement manager functions
+}
+class Cook extends Staff{
+    Cook(){
+        super();
+        type = Enums.StaffType.Cook;
+        salary = 80;
+    }
+    //implement cook function
+}
+class Cashier extends Staff{
+    Cashier(){
+        super();
+        type= Enums.StaffType.Cashier;
+        salary = 75;
+    }
+    //implement cashier function
+}
+class Driver extends Staff {
+    Driver() {
+        super();
+        type = Enums.StaffType.Driver;
+          // every new salesperson gets a new name
+    }
+    //add function for delivry orders
 }

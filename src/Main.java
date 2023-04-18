@@ -7,6 +7,7 @@
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Simulator sim = new Simulator();
+        sim.run();  // Let's do this thing
     }
 }
