@@ -13,12 +13,6 @@ import java.util.List;
 // Namer n = new Namer(folks);
 // n.getNext();  // gets the next name
 
-<<<<<<< HEAD
-=======
-//Works Cited:  Namer Class belongs to Bruce Montgomery - OOAD Spring 2023 Project 2
-
-
->>>>>>> 0f5faf014af074c8285acac0249fd0c9bb858c13
 public class Namer {
     List<String> names;  // names to choose from
     int pass; // how many times we've used the names
@@ -40,7 +34,6 @@ public class Namer {
     }
 
 }
-<<<<<<< HEAD
 
 
 
@@ -49,5 +42,3 @@ public class Namer {
 
 
 
-=======
->>>>>>> 0f5faf014af074c8285acac0249fd0c9bb858c13
