@@ -2,6 +2,10 @@ import java.text.NumberFormat;
 import java.util.Random;
 
 // Some static functions to call when you want things to be random or prettied
+<<<<<<< HEAD
+=======
+//Using Bruce Montgomery Utility Class
+>>>>>>> 0f5faf014af074c8285acac0249fd0c9bb858c13
 public interface Utility {
 
     // making this utility function that can be used by saying Utility.rndFromRange(min,max)
@@ -11,6 +15,14 @@ public interface Utility {
         return (int) ((Math.random() * ((max+1) - min)) + min);
     }
 
+<<<<<<< HEAD
+=======
+    // Short random 0-1 call
+    static double rnd() {
+        return Math.random();
+    }
+
+>>>>>>> 0f5faf014af074c8285acac0249fd0c9bb858c13
     // another utility for printing out pretty $ values
     // https://stackoverflow.com/questions/13791409/java-format-double-value-as-dollar-amount
     static String asDollar(double value) {
@@ -25,4 +37,8 @@ public interface Utility {
         int x = new Random().nextInt(clazz.getEnumConstants().length);
         return clazz.getEnumConstants()[x];
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 0f5faf014af074c8285acac0249fd0c9bb858c13

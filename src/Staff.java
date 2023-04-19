@@ -54,14 +54,44 @@ public abstract class Staff implements SysOut {
 }
 
 class Manager extends Staff {
+<<<<<<< HEAD
 
     static List<String> names = Arrays.asList("John", "Laura", "Joe", "Sam", "Sarah");
+=======
+>>>>>>> 0f5faf014af074c8285acac0249fd0c9bb858c13
     Manager() {
         super();
         type = Enums.StaffType.Manager;
         salary = 120;
     }
     //implement manager functions
+<<<<<<< HEAD
+=======
+}
+class Cook extends Staff{
+    Cook(){
+        super();
+        type = Enums.StaffType.Cook;
+        salary = 80;
+    }
+    //implement cook function
+}
+class Cashier extends Staff{
+    Cashier(){
+        super();
+        type= Enums.StaffType.Cashier;
+        salary = 75;
+    }
+    //implement cashier function
+}
+class Driver extends Staff {
+    Driver() {
+        super();
+        type = Enums.StaffType.Driver;
+          // every new salesperson gets a new name
+    }
+    //add function for delivry orders
+>>>>>>> 0f5faf014af074c8285acac0249fd0c9bb858c13
 }
 class Cook extends Staff{
     Cook(){
