@@ -12,7 +12,7 @@ public class Simulator implements SysOut {
     Enums.DayOfWeek dayOfWeek;
 
     Simulator() {
-        numDays = 5;
+        numDays = 1;
         dayOfWeek = Utility.randomEnum(Enums.DayOfWeek.class);
     }
 

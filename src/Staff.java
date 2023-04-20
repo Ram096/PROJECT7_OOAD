@@ -54,35 +54,46 @@ public abstract class Staff implements SysOut {
 }
 
 class Manager extends Staff {
-
+    static List<String> names = Arrays.asList("Joel", "Harden", "Tyrese", "Ben");
+    static Namer namer = new Namer(names);
     Manager() {
         super();
         type = Enums.StaffType.Manager;
-        salary = 120;
+        name = namer.getNext(); // Every new manager gets a new name
+        salary = 320;
     }
     //implement manager functions
 }
 class Cook extends Staff{
+    static List<String> names = Arrays.asList("Steph", "Klay", "Jordan", "Steve");
+    static Namer namer = new Namer(names);
     Cook(){
         super();
         type = Enums.StaffType.Cook;
-        salary = 80;
+        name = namer.getNext(); // Every new cook gets a new name
+        salary = 300;
     }
     //implement cook function
 }
 class Cashier extends Staff{
+    static List<String> names = Arrays.asList("Jason", "Sue", "Marcus", "Jimmy");
+    static Namer namer = new Namer(names);
     Cashier(){
         super();
-        type= Enums.StaffType.Cashier;
-        salary = 75;
+        type = Enums.StaffType.Cashier;
+        name = namer.getNext();  // every new Cashier gets a new name
+        salary = 200; // daily salary
     }
     //implement cashier function
 }
 class Driver extends Staff {
+    static List<String> names = Arrays.asList("Anthony","Austin","Rui","James");
+    static Namer namer = new Namer(names);
     Driver() {
         super();
         type = Enums.StaffType.Driver;
-        // every new salesperson gets a new name
+        name = namer.getNext();  // Every Driver gets a new name
+        salary = 150; // daily salary
     }
     //add function for delivery orders
 }
