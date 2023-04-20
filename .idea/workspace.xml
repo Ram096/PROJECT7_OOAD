@@ -5,12 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="74c9ceb4-2f10-43c8-90e0-663998cf8e9d" name="Changes" comment="">
-<<<<<<< HEAD
-      <change afterPath="$PROJECT_DIR$/src/Namer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Simulator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Utility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-=======
       <change afterPath="$PROJECT_DIR$/src/CashierCreator.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/CookCreator.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Customer.java" afterDir="false" />
@@ -20,7 +14,7 @@
       <change afterPath="$PROJECT_DIR$/src/Simulator.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/StaffCreator.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Utility.java" afterDir="false" />
->>>>>>> 0f5faf014af074c8285acac0249fd0c9bb858c13
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DoughMasters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DoughMasters.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Enums.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enums.java" afterDir="false" />
@@ -70,11 +64,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-<<<<<<< HEAD
-    "last_opened_file_path": "C:/Users/Ramy Kassam/IdeaProjects/project2carsim",
-=======
     "last_opened_file_path": "/Users/gustavoguijarro/PROJECT6_OOAD",
->>>>>>> 0f5faf014af074c8285acac0249fd0c9bb858c13
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -90,14 +80,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1681690722528</updated>
-<<<<<<< HEAD
       <workItem from="1681690723715" duration="8278000" />
       <workItem from="1681866238931" duration="6426000" />
       <workItem from="1681885160560" duration="1154000" />
-=======
       <workItem from="1681690723715" duration="4281000" />
       <workItem from="1681841326529" duration="5236000" />
->>>>>>> 0f5faf014af074c8285acac0249fd0c9bb858c13
     </task>
     <servers />
   </component>
