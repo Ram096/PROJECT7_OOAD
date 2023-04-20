@@ -71,21 +71,52 @@ public class DoughMasters implements SysOut {
         staff.add(newStaff);
     }
 
-    void getPizza() {
+    void setPizza() {
         List<String> toppings = new ArrayList<>();
+        List<String> crusts = new ArrayList<>();
+        List<String> sauces = new ArrayList<>();
+
         toppings.add("pepperoni");
         toppings.add("mushrooms");
         toppings.add("olives");
 
+        crusts.add("thin crust");
+        crusts.add("deep dish");
+        crusts.add("stuffed crust");
+
+        sauces.add("tomato sauce");
+        sauces.add("ranch");
+        sauces.add("alfredo");
+
         Map<String, Integer> toppingsInventory = new HashMap<>();
+        Map<String, Integer> crustsInventory = new HashMap<>();
+        Map<String, Integer> saucesInventory = new HashMap<>();
         toppingsInventory.put("pepperoni", 5);
         toppingsInventory.put("mushrooms", 7);
         toppingsInventory.put("olives", 3);
 
-        Pizza pizza = new Pizza("thin crust", "tomato sauce", toppings, toppingsInventory);
+        crustsInventory.put("thin crust", 6);
+        crustsInventory.put("deep dish", 7);
+        crustsInventory.put("stuffed crust", 9);
 
+        saucesInventory.put("tomato sauce", 4);
+        saucesInventory.put("ranch", 3);
+        saucesInventory.put("alfredo", 2);
+
+
+;
+        Pizza pizza = new Pizza(crusts, crustsInventory, sauces, saucesInventory, toppings, toppingsInventory);
+
+        out(pizza.getToppingsInventory());
         out("Crust type: " + pizza.getCrustType());
         out("Sauce type: " + pizza.getSauceType());
-        out("Toppings: " + pizza.getToppings());
+        out("Toppings choices: " + pizza.getToppings());
+
+        pizza.addTopping(toppings.get(0));
+
+        out("We added this "+ toppings.get(0) + " topping to the pizza!");
+
+        out(pizza.getToppingsInventory());
+
     }
 }

@@ -35,7 +35,7 @@ public class Simulator implements SysOut {
         for (int day = 1; day <= numDays; day++) {
             out(">>> Start Simulation Day " + day + " " + dayOfWeek);
                 pizza.openEveryDay(dayOfWeek);
-                pizza.getPizza();
+                pizza.setPizza();
                 out("Closing... come back tomorrow!\n");
                 dayOfWeek = getNextDay(dayOfWeek);
         }

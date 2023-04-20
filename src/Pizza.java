@@ -4,24 +4,28 @@ import java.util.Map;
 
 public class Pizza {
 
-    private String crustType;
-    private String sauceType;
+    private Map<String, Integer> crustsInventory;
+    private List<String> crusts;
+    private Map<String, Integer> saucesInventory;
+    private List<String> sauces;
     private Map<String, Integer> toppingsInventory;
     private List<String> toppings;
 
-    public Pizza(String crustType, String sauceType, List<String> toppings, Map<String, Integer> toppingsInventory) {
-        this.crustType = crustType;
-        this.sauceType = sauceType;
+    public Pizza(List<String> crusts, Map<String, Integer> crustsInventory, List<String> sauces, Map<String, Integer> saucesInventory, List<String> toppings, Map<String, Integer> toppingsInventory) {
+        this.crusts = crusts;
+        this.crustsInventory = crustsInventory;
+        this.sauces = sauces;
+        this.saucesInventory = saucesInventory;
         this.toppings = toppings;
         this.toppingsInventory = toppingsInventory;
     }
 
-    public String getCrustType() {
-        return crustType;
+    public List<String> getCrustType() {
+        return crusts;
     }
 
-    public String getSauceType() {
-        return sauceType;
+    public List<String> getSauceType() {
+        return sauces;
     }
 
     public List<String> getToppings() {
@@ -56,6 +60,14 @@ public class Pizza {
                 toppingsInventory.put(topping, quantity);
             }
         }
+    }
+    public String getToppingsInventory() {
+        StringBuilder inventory = new StringBuilder();
+        inventory.append("Toppings Inventory:\n");
+        for (Map.Entry<String, Integer> entry : toppingsInventory.entrySet()) {
+            inventory.append(entry.getKey() + ": " + entry.getValue() + "\n");
+        }
+        return inventory.toString();
     }
 
 }
