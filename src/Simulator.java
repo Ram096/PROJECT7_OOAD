@@ -22,5 +22,7 @@ public class Simulator implements SysOut {
         out("Checking our inventory...\n");
         out("Welcome to Dough Masters");
         DoughMasters dough = new DoughMasters();
+
+        dough.getPizza();
     }
 }
