@@ -33,6 +33,7 @@ public class Simulator implements SysOut {
 
         DoughMasters pizza = new DoughMasters();
         for (int day = 1; day <= numDays; day++) {
+            out(">>> Start Simulation Day " + day + " " + dayOfWeek);
                 pizza.openEveryDay(dayOfWeek);
                 pizza.getPizza();
                 out("Closing... come back tomorrow!\n");
