@@ -1,7 +1,3 @@
-test
+For Project 6, we updated our class diagram accordingly to what was implemented. We also included the design pattenrs we plan to implement.
 
-
-tewt
-3
-t34t
-t43
+So far the only design pattern fully implemented in our system as of right now is the the factory pattern for staff creation
