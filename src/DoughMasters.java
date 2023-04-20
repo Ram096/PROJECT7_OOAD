@@ -41,6 +41,7 @@ public class DoughMasters implements SysOut {
     }
 
     void openEveryDay(Enums.DayOfWeek day) {
+        out("------------ DOUGH MASTERS -------------");
         out("Checking our inventory...\n");
         out("Checking our Staff...\n");
         hireNewStaff();
