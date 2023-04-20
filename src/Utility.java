@@ -11,6 +11,10 @@ public interface Utility {
         return (int) ((Math.random() * ((max+1) - min)) + min);
     }
 
+    // Short random 0-1 call
+    static double rnd() {
+        return Math.random();
+    }
     // another utility for printing out pretty $ values
     // https://stackoverflow.com/questions/13791409/java-format-double-value-as-dollar-amount
     static String asDollar(double value) {
