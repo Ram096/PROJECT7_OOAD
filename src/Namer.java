@@ -1,10 +1,10 @@
+// Namer class
+/*
+
+ */
+
 import java.util.Arrays;
 import java.util.List;
-
-// A silly little helper class for doing unique names
-// a Namer gets initialized with an ArrayList of Strings of any length
-// the Namer will provide getNext to return the next name in the list until it runs out
-// then it will start over adding a number to the name
 
 // Typical use:
 // import java.util.List;

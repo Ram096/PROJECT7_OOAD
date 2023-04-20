@@ -15,7 +15,6 @@ public interface Utility {
     static double rnd() {
         return Math.random();
     }
-
     // another utility for printing out pretty $ values
     // https://stackoverflow.com/questions/13791409/java-format-double-value-as-dollar-amount
     static String asDollar(double value) {
