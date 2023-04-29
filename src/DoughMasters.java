@@ -72,51 +72,38 @@ public class DoughMasters implements SysOut {
     }
 
     void setPizza() {
-        List<String> toppings = new ArrayList<>();
-        List<String> crusts = new ArrayList<>();
-        List<String> sauces = new ArrayList<>();
+        Map<Enums.Topping, Integer> toppingsInventory = new HashMap<>();
+        toppingsInventory.put(Enums.Topping.mushroom, 5);
+        toppingsInventory.put(Enums.Topping.olives, 3);
+        toppingsInventory.put(Enums.Topping.bacon, 7);
 
-        toppings.add("pepperoni");
-        toppings.add("mushrooms");
-        toppings.add("olives");
+        Map<Enums.Sauce, Integer> saucesInventory = new HashMap<>();
+        saucesInventory.put(Enums.Sauce.marinara, 10);
+        saucesInventory.put(Enums.Sauce.alfredo, 2);
 
-        crusts.add("thin crust");
-        crusts.add("deep dish");
-        crusts.add("stuffed crust");
+        Map<Enums.Crust, Integer> crustsInventory = new HashMap<>();
+        crustsInventory.put(Enums.Crust.thin, 8);
+        crustsInventory.put(Enums.Crust.regular, 5);
 
-        sauces.add("tomato sauce");
-        sauces.add("ranch");
-        sauces.add("alfredo");
+        Inventory inventory = new Inventory(toppingsInventory, saucesInventory, crustsInventory);
 
-        Map<String, Integer> toppingsInventory = new HashMap<>();
-        Map<String, Integer> crustsInventory = new HashMap<>();
-        Map<String, Integer> saucesInventory = new HashMap<>();
-        toppingsInventory.put("pepperoni", 5);
-        toppingsInventory.put("mushrooms", 7);
-        toppingsInventory.put("olives", 3);
+        // Create a pizza and check if the inventory gets updated
+        List<Enums.Size> pizzaSizes = List.of(Enums.Size.xLarge);
+        List<Enums.Crust> crusts = List.of(Enums.Crust.regular);
+        List<Enums.Sauce> sauces = List.of(Enums.Sauce.alfredo);
+        List<Enums.Topping> toppings = List.of(Enums.Topping.bacon, Enums.Topping.mushroom, Enums.Topping.olives);
 
-        crustsInventory.put("thin crust", 6);
-        crustsInventory.put("deep dish", 7);
-        crustsInventory.put("stuffed crust", 9);
+        Pizza pizza = new customerPizza(pizzaSizes, crusts, crustsInventory, sauces, saucesInventory, toppings, toppingsInventory);
 
-        saucesInventory.put("tomato sauce", 4);
-        saucesInventory.put("ranch", 3);
-        saucesInventory.put("alfredo", 2);
+        pizza.makePizza(Enums.Crust.thin, Enums.Sauce.alfredo, toppings);
 
+        String toppingsList = String.join(", ", toppings.stream().map(Enum::toString).toArray(String[]::new));
 
-;
-        Pizza pizza = new Pizza(crusts, crustsInventory, sauces, saucesInventory, toppings, toppingsInventory);
-
-        out(pizza.getToppingsInventory());
-        out("Crust type: " + pizza.getCrustType());
-        out("Sauce type: " + pizza.getSauceType());
-        out("Toppings choices: " + pizza.getToppings());
-
-        pizza.addTopping(toppings.get(0));
-
-        out("We added this "+ toppings.get(0) + " topping to the pizza!");
-
-        out(pizza.getToppingsInventory());
+        out("Toppings inventory after making pizza: " + inventory.getToppingsInventory());
+        out("Sauces inventory after making pizza: " + inventory.getSaucesInventory());
+        out("Crusts inventory after making pizza: " + inventory.getCrustsInventory());
+        out("This is the inventory" + inventory.getInventory());
+        out("The customer ordered a "+ pizzaSizes.get(0) +" pizza, that has " + crusts.get(0) + " crust, It has " + sauces.get(0) + " sauce, with " + toppings.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(toppings, pizzaSizes)));
 
     }
 }
