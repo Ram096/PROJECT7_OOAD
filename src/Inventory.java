@@ -2,9 +2,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Inventory {
-    private Map<Enums.Topping, Integer> toppingsInventory;
-    private Map<Enums.Sauce, Integer> saucesInventory;
-    private Map<Enums.Crust, Integer> crustsInventory;
+    public Map<Enums.Topping, Integer> toppingsInventory;
+    public Map<Enums.Sauce, Integer> saucesInventory;
+    public Map<Enums.Crust, Integer> crustsInventory;
 
     public Inventory(Map<Enums.Topping, Integer> toppingsInventory, Map<Enums.Sauce, Integer> saucesInventory, Map<Enums.Crust, Integer> crustsInventory) {
         this.toppingsInventory = toppingsInventory;

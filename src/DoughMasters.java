@@ -4,6 +4,7 @@ Dough Masters class represents the logistics of staff, inventory and pizza order
 
  */
 import javax.security.sasl.SaslException;
+import javax.swing.*;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,23 +18,45 @@ import java.util.Map;
 public class DoughMasters implements SysOut {
     ArrayList<Staff> staff;
     ArrayList<Staff> departedStaff;
-    static ArrayList<Staff> inventory;
+    static ArrayList<Staff> inventory1;
     private double budget;
-
+    Map<Enums.Topping, Integer> toppingsInventory = new HashMap<>();
+    Map<Enums.Sauce, Integer> saucesInventory = new HashMap<>();
+    Map<Enums.Crust, Integer> crustsInventory = new HashMap<>();
+    Inventory inventory = new Inventory(toppingsInventory, saucesInventory, crustsInventory);
     DoughMasters() {
         staff = new ArrayList<>();
         departedStaff = new ArrayList<>();
-        inventory = new ArrayList<>();
+        inventory1 = new ArrayList<>();
         budget = 100000;
+        toppingsInventory.put(Enums.Topping.mushroom, 1);
+        toppingsInventory.put(Enums.Topping.olives, 1);
+        toppingsInventory.put(Enums.Topping.bacon, 1);
+        toppingsInventory.put(Enums.Topping.pepperoni, 1);
+        toppingsInventory.put(Enums.Topping.onion, 1);
+        toppingsInventory.put(Enums.Topping.peppers, 1);
+        toppingsInventory.put(Enums.Topping.sausage, 1);
+        saucesInventory.put(Enums.Sauce.marinara, 1);
+        saucesInventory.put(Enums.Sauce.alfredo, 1);
+        saucesInventory.put(Enums.Sauce.bbq, 1);
+        saucesInventory.put(Enums.Sauce.ranch, 1);
+        crustsInventory.put(Enums.Crust.thin, 1);
+        crustsInventory.put(Enums.Crust.regular, 1);
+        crustsInventory.put(Enums.Crust.deep_dish, 1);
     }
 
     double getBudget() {
         return budget;
     }
+    double getMoneySpent() {
+        double moneyOut = budget - 50000;
+        return moneyOut;
+    }
 
     void moneyIn(double cash) {
         budget += cash;
     }
+
 
     void moneyOut(double cash) {
         budget -= cash;
@@ -49,6 +72,19 @@ public class DoughMasters implements SysOut {
         out("Checking our inventory...\n");
         out("Checking our Staff...\n");
         hireNewStaff();
+        out("The store is starting to sell...");
+
+        ArrayList<Customer> customers = getCustomers(day);
+
+        managerRestock(inventory);
+        for (Customer c:customers) {
+            out("Customer "+c.name+"is buying right now...");
+            startPizza(c);
+        }
+
+        out("The money spent today is "+getMoneySpent());
+
+        out("The current Inventory at the end of the day"+inventory.getInventory());
     }
 
     // see if we need any new hires
@@ -71,39 +107,89 @@ public class DoughMasters implements SysOut {
         staff.add(newStaff);
     }
 
-    void setPizza() {
-        Map<Enums.Topping, Integer> toppingsInventory = new HashMap<>();
-        toppingsInventory.put(Enums.Topping.mushroom, 5);
-        toppingsInventory.put(Enums.Topping.olives, 3);
-        toppingsInventory.put(Enums.Topping.bacon, 7);
-
-        Map<Enums.Sauce, Integer> saucesInventory = new HashMap<>();
-        saucesInventory.put(Enums.Sauce.marinara, 10);
-        saucesInventory.put(Enums.Sauce.alfredo, 2);
-
-        Map<Enums.Crust, Integer> crustsInventory = new HashMap<>();
-        crustsInventory.put(Enums.Crust.thin, 8);
-        crustsInventory.put(Enums.Crust.regular, 5);
-
-        Inventory inventory = new Inventory(toppingsInventory, saucesInventory, crustsInventory);
-
+    void setPizza(Enums.Size pizzaSizes,Enums.Crust crusts, Enums.Sauce sauces,List<Enums.Topping> toppings) {
         // Create a pizza and check if the inventory gets updated
-        List<Enums.Size> pizzaSizes = List.of(Enums.Size.xLarge);
-        List<Enums.Crust> crusts = List.of(Enums.Crust.regular);
-        List<Enums.Sauce> sauces = List.of(Enums.Sauce.alfredo);
-        List<Enums.Topping> toppings = List.of(Enums.Topping.bacon, Enums.Topping.mushroom, Enums.Topping.olives);
+//        List<Enums.Size> pizzaSizes = List.of(Enums.Size.xLarge);
+//        List<Enums.Crust> crusts = List.of(Enums.Crust.regular);
+//        List<Enums.Sauce> sauces = List.of(Enums.Sauce.alfredo);
+//        List<Enums.Topping> toppings = List.of(Enums.Topping.bacon, Enums.Topping.mushroom, Enums.Topping.olives);
 
-        Pizza pizza = new customerPizza(pizzaSizes, crusts, crustsInventory, sauces, saucesInventory, toppings, toppingsInventory);
+        Pizza pizza = new customerPizza(crustsInventory, saucesInventory, toppingsInventory);
 
-        pizza.makePizza(Enums.Crust.thin, Enums.Sauce.alfredo, toppings);
+        Boolean pizzaMake = pizza.makePizza(crusts, sauces, toppings);
 
-        String toppingsList = String.join(", ", toppings.stream().map(Enum::toString).toArray(String[]::new));
+        if(pizzaMake) {
+            String toppingsList = String.join(", ", toppings.stream().map(Enum::toString).toArray(String[]::new));
+            out("The customer ordered a " + pizzaSizes + " pizza, that has " + crusts + " crust, It has " + sauces + " sauce, with " + toppings.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(toppings, pizzaSizes)));
+            moneyIn(pizza.getPrice(toppings, pizzaSizes));
+        }
+    }
 
-        out("Toppings inventory after making pizza: " + inventory.getToppingsInventory());
-        out("Sauces inventory after making pizza: " + inventory.getSaucesInventory());
-        out("Crusts inventory after making pizza: " + inventory.getCrustsInventory());
-        out("This is the inventory" + inventory.getInventory());
-        out("The customer ordered a "+ pizzaSizes.get(0) +" pizza, that has " + crusts.get(0) + " crust, It has " + sauces.get(0) + " sauce, with " + toppings.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(toppings, pizzaSizes)));
+    void startPizza(Customer customer) {
+        Enums.Size pizzaSizes = customer.prefSize;
+        Enums.Crust crusts = customer.prefCrust;
+        Enums.Sauce sauces = customer.prefSauce;
+        List<Enums.Topping> toppings = customer.prefTopping;
+        setPizza(pizzaSizes, crusts, sauces, toppings);
+    }
 
+    ArrayList<Customer> getCustomers(Enums.DayOfWeek day) {
+        // 0 to 5 buyers arrive (2-8 on Fri/Sat)
+        int customerMin = 2;  //normal Mon-Thur
+        int customerMax = 2;
+        if (day == Enums.DayOfWeek.Fri || day == Enums.DayOfWeek.Sat || day == Enums.DayOfWeek.Sun) {
+            customerMin = 2;
+            customerMax = 2;
+        }
+        ArrayList<Customer> buyers = new ArrayList<Customer>();
+        int customerCount = Utility.rndFromRange(customerMin,customerMax);
+        for (int i=1; i<=customerCount; ++i) buyers.add(new Customer());
+        out("The DoughMasters has "+customerCount+" buyers today...");
+        return buyers;
+    }
+
+    public void managerRestock(Inventory inventory) {
+        int minQuantity = 1;
+        int buying = 15;
+        for (Enums.Topping topping : inventory.toppingsInventory.keySet()) {
+            int quantity = inventory.toppingsInventory.get(topping);
+            if (quantity < minQuantity) {
+                inventory.toppingsInventory.put(topping, quantity + buying);
+                out("The manager has added "+buying+" of "+topping+" to the inventory...");
+                moneyOut(.99 * minQuantity);
+            }
+        }
+
+        for (Enums.Sauce sauce : inventory.saucesInventory.keySet()) {
+            int quantity = inventory.saucesInventory.get(sauce);
+            if (quantity < minQuantity) {
+                inventory.saucesInventory.put(sauce, quantity + buying);
+                out("The manager has added "+buying+" of "+sauce+" to the inventory...");
+                if(sauce == Enums.Sauce.bbq) {
+                    moneyOut(3.46 * buying);
+                } else if (sauce == Enums.Sauce.marinara) {
+                    moneyOut(2.96 * buying);
+                } else if (sauce == Enums.Sauce.ranch) {
+                    moneyOut(3.99 * buying);
+                } else {
+                    moneyOut(4.50 * buying);
+                }
+            }
+        }
+
+        for (Enums.Crust crust : inventory.crustsInventory.keySet()) {
+            int quantity = inventory.crustsInventory.get(crust);
+            if (quantity < minQuantity) {
+                inventory.crustsInventory.put(crust, quantity + buying);
+                out("The manager has added "+buying+" of "+crust+" to the inventory...");
+                if(crust == Enums.Crust.deep_dish) {
+                    moneyOut(2.50 * buying);
+                } else if (crust == Enums.Crust.thin) {
+                    moneyOut(1.50 * buying);
+                } else {
+                    moneyOut(2.00 * buying);
+                }
+            }
+        }
     }
 }

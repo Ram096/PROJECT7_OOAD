@@ -12,7 +12,7 @@ public class Simulator implements SysOut {
     Enums.DayOfWeek dayOfWeek;
 
     Simulator() {
-        numDays = 1;
+        numDays = 3;
         dayOfWeek = Utility.randomEnum(Enums.DayOfWeek.class);
     }
 
@@ -35,7 +35,6 @@ public class Simulator implements SysOut {
         for (int day = 1; day <= numDays; day++) {
             out(">>> Start Simulation Day " + day + " " + dayOfWeek);
                 pizza.openEveryDay(dayOfWeek);
-                pizza.setPizza();
                 out("Closing... come back tomorrow!\n");
                 dayOfWeek = getNextDay(dayOfWeek);
         }
