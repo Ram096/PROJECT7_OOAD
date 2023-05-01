@@ -24,6 +24,9 @@ public abstract class Pizza implements SysOut{
     public void setCond(Enums.cookCond cond) {
         this.cookCond = cond;
     }
+    public Enums.cookCond getCookCond() {
+        return cookCond;
+    }
     public Boolean makePizza(Enums.Crust crustType, Enums.Sauce sauceType, List<Enums.Topping> toppings, Customer c) {
         Map<Enums.Topping, Integer> toppingsUsed = new HashMap<>();
         List<Enums.Topping> newToppings = new ArrayList<>();
@@ -139,22 +142,35 @@ public abstract class Pizza implements SysOut{
         return null;
     }
 
-    public double getPrice(List<Enums.Topping> toppings, Enums.Size pizzaSize) {
-        if (pizzaSize == Enums.Size.small) {
-            double total = (1.99 * toppings.size()) +8.99;
-            return total;
-        }
-        else if (pizzaSize == Enums.Size.medium) {
-            double total = (1.99 * toppings.size()) +10.99;
-            return total;
-        }
-        else if (pizzaSize == Enums.Size.large) {
-            double total = (1.99 * toppings.size()) +13.99;
-            return total;
-        }
-        else {
-            double total = (1.99 * toppings.size()) +17.99;
-            return total;
+    public double getPrice(List<Enums.Topping> toppings, Enums.Size pizzaSize, Enums.cookCond cond) {
+        if (cond == Enums.cookCond.under_cooked) {
+            if (pizzaSize == Enums.Size.small) {
+                double total = ((1.99 * toppings.size()) + 8.99) * 0.5;
+                return total;
+            } else if (pizzaSize == Enums.Size.medium) {
+                double total = ((1.99 * toppings.size()) + 10.99) * 0.5;
+                return total;
+            } else if (pizzaSize == Enums.Size.large) {
+                double total = ((1.99 * toppings.size()) + 13.99) * 0.5;
+                return total;
+            } else {
+                double total = ((1.99 * toppings.size()) + 17.99) * 0.5;
+                return total;
+            }
+        } else {
+            if (pizzaSize == Enums.Size.small) {
+                double total = (1.99 * toppings.size()) + 8.99;
+                return total;
+            } else if (pizzaSize == Enums.Size.medium) {
+                double total = (1.99 * toppings.size()) + 10.99;
+                return total;
+            } else if (pizzaSize == Enums.Size.large) {
+                double total = (1.99 * toppings.size()) + 13.99;
+                return total;
+            } else {
+                double total = (1.99 * toppings.size()) + 17.99;
+                return total;
+            }
         }
     }
 }
