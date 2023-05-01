@@ -46,7 +46,6 @@ class FastOrder extends PizzaDecorator{
     public FastOrder(Pizza decoratedPizza){
         super(decoratedPizza);
     }
-
     public double getPrice(){
         return decoratedPizza.total * 1.5; //50% price increase to vehicle
     }

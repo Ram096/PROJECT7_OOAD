@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 public class DoughMasters implements SysOut {
     ArrayList<Staff> staff;
     ArrayList<Staff> departedStaff;
@@ -117,6 +118,13 @@ public class DoughMasters implements SysOut {
         Boolean pizzaMake = pizza.makePizza(crusts, sauces, toppings, c);
 
         if(pizzaMake) {
+            if(Math.random() <= 10){
+                out("Pizza order is taking priority! Fast order option has been added to pizza for 50% of pizza sale price. Old price: "+ pizza.getPrice(c.prefTopping, c.prefSize));
+                FastOrder fastOrder =  new FastOrder(pizza);
+                pizza.total = pizza.getPrice(c.prefTopping, c.prefSize);
+                pizza.total = fastOrder.getPrice();
+                out("New pizza price: "+pizza.total);
+            }
             String toppingsList = String.join(", ", c.prefTopping.stream().map(Enum::toString).toArray(String[]::new));
             out("The customer ordered a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize)));
             moneyIn(pizza.getPrice(c.prefTopping, c.prefSize));
