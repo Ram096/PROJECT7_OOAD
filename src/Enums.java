@@ -6,4 +6,5 @@ public class Enums {
     public enum Sauce {marinara, alfredo, bbq, ranch}
     public enum Crust {thin, regular, deep_dish}
     public enum Size {small, medium, large, xLarge}
+    public enum cookCond {under_cooked, just_Right, over_cooked}
 }
