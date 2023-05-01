@@ -16,7 +16,7 @@ class MeatToppings extends PizzaDecorator{
     }
 
     public double getPrice(){
-        return decoratedPizza.total * 1.2; //20% price increase to vehicle
+        return decoratedPizza.total * 1.2; //20% price increase to pizza
     }
 }
 
@@ -27,7 +27,7 @@ class ExtraCheese extends PizzaDecorator{
     }
 
     public double getPrice(){
-        return decoratedPizza.total * 1.1; //10% price increase to vehicle
+        return decoratedPizza.total * 1.1; //10% price increase to pizza
     }
 
 }
@@ -38,7 +38,7 @@ class ExtraSauce extends PizzaDecorator{
     }
 
     public double getPrice(){
-        return decoratedPizza.total * 1.05; //5% price increase to vehicle
+        return decoratedPizza.total * 1.02; //2% price increase to pizza
     }
 }
 //Last concrete decorator
@@ -47,7 +47,7 @@ class FastOrder extends PizzaDecorator{
         super(decoratedPizza);
     }
     public double getPrice(){
-        return decoratedPizza.total * 1.5; //50% price increase to vehicle
+        return decoratedPizza.total * 1.5; //50% price increase to pizza
     }
 }
 

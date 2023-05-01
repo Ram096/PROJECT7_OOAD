@@ -83,7 +83,7 @@ public class DoughMasters implements SysOut {
             startPizza(c);
         }
 
-        out("The money spent today is "+getMoneySpent());
+        out("The money spent today is "+ Utility.asDollar(getMoneySpent()));
 
         out("The current Inventory at the end of the day"+inventory.getInventory());
     }
@@ -118,15 +118,33 @@ public class DoughMasters implements SysOut {
         Boolean pizzaMake = pizza.makePizza(crusts, sauces, toppings, c);
 
         if(pizzaMake) {
-            if(Math.random() <= 10){
-                out("Pizza order is taking priority! Fast order option has been added to pizza for 50% of pizza sale price. Old price: "+ pizza.getPrice(c.prefTopping, c.prefSize));
+            pizza.total = pizza.getPrice(c.prefTopping, c.prefSize);
+            if(Math.random() <= 0.65){
+                out("Extra sauce for 2% of pizza total has been added! Old pizza total: "+ Utility.asDollar(pizza.total));
+                ExtraSauce extraSauce = new ExtraSauce(pizza);
+                pizza.total = extraSauce.getPrice();
+                out("New Pizza Total: "+ Utility.asDollar(pizza.total));
+            }
+            if(Math.random() <= .10){
+                out("Fast Order for 50% of pizza total has been added! Pizza order will now take priority and be made fast! Old pizza total: " + Utility.asDollar(pizza.total));
                 FastOrder fastOrder =  new FastOrder(pizza);
-                pizza.total = pizza.getPrice(c.prefTopping, c.prefSize);
                 pizza.total = fastOrder.getPrice();
-                out("New pizza price: "+pizza.total);
+                out("New Pizza Total: "+ pizza.total);
+            }
+            if(Math.random() <= .15){
+                out("Extra meat toppings for 20% of pizza total has been added! More sausage, bacon and pepperoni have been added Old pizza total: "+ Utility.asDollar(pizza.total));
+                MeatToppings meatToppings = new MeatToppings(pizza);
+                pizza.total = meatToppings.getPrice();
+                out("New Pizza Total: " + Utility.asDollar(pizza.total));
+            }
+            if(Math.random() <= .20){
+                out("Extra cheese for 10% of pizza total has been added! Old pizza total: "+ Utility.asDollar(pizza.total));
+                ExtraCheese extraCheese = new ExtraCheese(pizza);
+                pizza.total = extraCheese.getPrice();
+                out("New Pizza Total: "+ Utility.asDollar(pizza.total));
             }
             String toppingsList = String.join(", ", c.prefTopping.stream().map(Enum::toString).toArray(String[]::new));
-            out("The customer ordered a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize)));
+            out("The customer ordered a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.total));
             moneyIn(pizza.getPrice(c.prefTopping, c.prefSize));
         }
     }
