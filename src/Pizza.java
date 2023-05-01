@@ -22,6 +22,7 @@ public abstract class Pizza implements SysOut{
         this.crustsInventory = crustsInventory;
         this.saucesInventory = saucesInventory;
         this.toppingsInventory = toppingsInventory;
+        this.tip = 0;
     }
     public void setCond(Enums.cookCond cond) {
         this.cookCond = cond;
