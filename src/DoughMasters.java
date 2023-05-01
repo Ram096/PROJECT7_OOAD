@@ -76,7 +76,7 @@ public class DoughMasters implements SysOut {
 
         ArrayList<Customer> customers = getCustomers(day);
 
-        managerRestock(inventory);
+        // managerRestock(inventory);
         for (Customer c:customers) {
             out("Customer "+c.name+"is buying right now...");
             startPizza(c);
@@ -107,30 +107,20 @@ public class DoughMasters implements SysOut {
         staff.add(newStaff);
     }
 
-    void setPizza(Enums.Size pizzaSizes,Enums.Crust crusts, Enums.Sauce sauces,List<Enums.Topping> toppings) {
-        // Create a pizza and check if the inventory gets updated
-//        List<Enums.Size> pizzaSizes = List.of(Enums.Size.xLarge);
-//        List<Enums.Crust> crusts = List.of(Enums.Crust.regular);
-//        List<Enums.Sauce> sauces = List.of(Enums.Sauce.alfredo);
-//        List<Enums.Topping> toppings = List.of(Enums.Topping.bacon, Enums.Topping.mushroom, Enums.Topping.olives);
+    void startPizza(Customer c) {
+        Enums.Crust crusts = c.prefCrust;
+        Enums.Sauce sauces = c.prefSauce;
+        List<Enums.Topping> toppings = c.prefTopping;
 
         Pizza pizza = new customerPizza(crustsInventory, saucesInventory, toppingsInventory);
 
-        Boolean pizzaMake = pizza.makePizza(crusts, sauces, toppings);
+        Boolean pizzaMake = pizza.makePizza(crusts, sauces, toppings, c);
 
         if(pizzaMake) {
-            String toppingsList = String.join(", ", toppings.stream().map(Enum::toString).toArray(String[]::new));
-            out("The customer ordered a " + pizzaSizes + " pizza, that has " + crusts + " crust, It has " + sauces + " sauce, with " + toppings.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(toppings, pizzaSizes)));
-            moneyIn(pizza.getPrice(toppings, pizzaSizes));
+            String toppingsList = String.join(", ", c.prefTopping.stream().map(Enum::toString).toArray(String[]::new));
+            out("The customer ordered a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize)));
+            moneyIn(pizza.getPrice(c.prefTopping, c.prefSize));
         }
-    }
-
-    void startPizza(Customer customer) {
-        Enums.Size pizzaSizes = customer.prefSize;
-        Enums.Crust crusts = customer.prefCrust;
-        Enums.Sauce sauces = customer.prefSauce;
-        List<Enums.Topping> toppings = customer.prefTopping;
-        setPizza(pizzaSizes, crusts, sauces, toppings);
     }
 
     ArrayList<Customer> getCustomers(Enums.DayOfWeek day) {

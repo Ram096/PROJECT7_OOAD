@@ -14,15 +14,19 @@ public abstract class Pizza implements SysOut{
     private List<Enums.Sauce> sauces;
     static public Map<Enums.Topping, Integer> toppingsInventory;
     private List<Enums.Topping> toppings;
+    private Enums.cookCond cookCond;
 
     Pizza(Map<Enums.Crust, Integer> crustsInventory, Map<Enums.Sauce, Integer> saucesInventory, Map<Enums.Topping, Integer> toppingsInventory) {
         this.crustsInventory = crustsInventory;
         this.saucesInventory = saucesInventory;
         this.toppingsInventory = toppingsInventory;
     }
-
-    public Boolean makePizza(Enums.Crust crustType, Enums.Sauce sauceType, List<Enums.Topping> toppings) {
+    public void setCond(Enums.cookCond cond) {
+        this.cookCond = cond;
+    }
+    public Boolean makePizza(Enums.Crust crustType, Enums.Sauce sauceType, List<Enums.Topping> toppings, Customer c) {
         Map<Enums.Topping, Integer> toppingsUsed = new HashMap<>();
+        List<Enums.Topping> newToppings = new ArrayList<>();
         boolean canMakePizza = true;
 
         if (crustsInventory.get(crustType) < 1) {
@@ -30,6 +34,7 @@ public abstract class Pizza implements SysOut{
             if (newCrust != null) {
                 out("We have replaced " + crustType + " with the person's 2nd choice " + newCrust + ".");
                 crustType = newCrust;
+                c.prefCrust = newCrust;
             } else {
                 canMakePizza = false;
             }
@@ -41,6 +46,7 @@ public abstract class Pizza implements SysOut{
                 if (newSauce != null) {
                     out("We have replaced " + sauceType + " with the person's 2nd choice " + newSauce + ".");
                     sauceType = newSauce;
+                    c.prefSauce = newSauce;
                 } else {
                     canMakePizza = false;
                 }
@@ -59,7 +65,9 @@ public abstract class Pizza implements SysOut{
                     }
                 }
                 toppingsUsed.put(topping, toppingsUsed.getOrDefault(topping, 0) + 1);
+                newToppings.add(topping);
             }
+            c.prefTopping = newToppings;
         }
 
         if (canMakePizza) {
@@ -70,9 +78,6 @@ public abstract class Pizza implements SysOut{
                 int quantity = entry.getValue();
                 toppingsInventory.put(topping, toppingsInventory.get(topping) - quantity);
             }
-            customerPizza.crustsInventory = crustsInventory;
-            customerPizza.saucesInventory = saucesInventory;
-            customerPizza.toppingsInventory = toppingsInventory;
         }
 
         return canMakePizza;

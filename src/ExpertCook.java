@@ -1,5 +1,5 @@
 public class ExpertCook implements CookMethod{
-    public void cook(Pizza pizza) {
+    public void cook(Pizza pizza, Customer c) {
 
     }
 }
