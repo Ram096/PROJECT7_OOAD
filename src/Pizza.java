@@ -15,6 +15,7 @@ public abstract class Pizza implements SysOut{
     static public Map<Enums.Topping, Integer> toppingsInventory;
     private List<Enums.Topping> toppings;
     private Enums.cookCond cookCond;
+    double total;
 
     Pizza(Map<Enums.Crust, Integer> crustsInventory, Map<Enums.Sauce, Integer> saucesInventory, Map<Enums.Topping, Integer> toppingsInventory) {
         this.crustsInventory = crustsInventory;
@@ -141,6 +142,7 @@ public abstract class Pizza implements SysOut{
         out("The person has no other choices and won't replace that topping!");
         return null;
     }
+
 
     public double getPrice(List<Enums.Topping> toppings, Enums.Size pizzaSize, Enums.cookCond cond) {
         if (cond == Enums.cookCond.under_cooked) {

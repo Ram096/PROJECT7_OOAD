@@ -6,11 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="a6bcc851-ee90-4092-b9e4-957de4d39a3f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/AverageCook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AverageCook.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BadCook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BadCook.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CookMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CookMethod.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ExpertCook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ExpertCook.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Pizza.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pizza.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/DoughMasters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DoughMasters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PizzaDecorator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PizzaDecorator.java" afterDir="false" />
+>>>>>>> f7e9b64fe99f47f86951c20e14ccc6b05ff144e0
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
