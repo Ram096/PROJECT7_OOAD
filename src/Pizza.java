@@ -15,6 +15,7 @@ public abstract class Pizza implements SysOut{
     static public Map<Enums.Topping, Integer> toppingsInventory;
     private List<Enums.Topping> toppings;
     private Enums.cookCond cookCond;
+    double total;
 
     Pizza(Map<Enums.Crust, Integer> crustsInventory, Map<Enums.Sauce, Integer> saucesInventory, Map<Enums.Topping, Integer> toppingsInventory) {
         this.crustsInventory = crustsInventory;
@@ -141,19 +142,19 @@ public abstract class Pizza implements SysOut{
 
     public double getPrice(List<Enums.Topping> toppings, Enums.Size pizzaSize) {
         if (pizzaSize == Enums.Size.small) {
-            double total = (1.99 * toppings.size()) +8.99;
+             total = (1.99 * toppings.size()) +8.99;
             return total;
         }
         else if (pizzaSize == Enums.Size.medium) {
-            double total = (1.99 * toppings.size()) +10.99;
+             total = (1.99 * toppings.size()) +10.99;
             return total;
         }
         else if (pizzaSize == Enums.Size.large) {
-            double total = (1.99 * toppings.size()) +13.99;
+             total = (1.99 * toppings.size()) +13.99;
             return total;
         }
         else {
-            double total = (1.99 * toppings.size()) +17.99;
+             total = (1.99 * toppings.size()) +17.99;
             return total;
         }
     }
