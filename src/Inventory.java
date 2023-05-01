@@ -28,14 +28,6 @@ public class Inventory {
         toppingsInventory.put(topping, toppingsInventory.getOrDefault(topping, 0) - 1);
     }
 
-    public void removeInventory(Enums.Sauce sauce) {
-        saucesInventory.put(sauce, saucesInventory.getOrDefault(sauce, 0) - 1);
-    }
-
-    public void removeInventory(Enums.Crust crust) {
-        crustsInventory.put(crust, crustsInventory.getOrDefault(crust, 0) - 1);
-    }
-
     public void restockInventory(Map<Enums.Topping, Integer> newToppings, Map<Enums.Sauce, Integer> newSauces, Map<Enums.Crust, Integer> newCrusts) {
         for (Map.Entry<Enums.Topping, Integer> entry : newToppings.entrySet()) {
             Enums.Topping topping = entry.getKey();
@@ -52,18 +44,6 @@ public class Inventory {
             int quantity = entry.getValue();
             crustsInventory.put(crust, crustsInventory.getOrDefault(crust, 0) + quantity);
         }
-    }
-
-    public Map<Enums.Topping, Integer> getToppingsInventory() {
-        return toppingsInventory;
-    }
-
-    public Map<Enums.Sauce, Integer> getSaucesInventory() {
-        return saucesInventory;
-    }
-
-    public Map<Enums.Crust, Integer> getCrustsInventory() {
-        return crustsInventory;
     }
 
     public Map<String, Map<String, Integer>> getInventory() {

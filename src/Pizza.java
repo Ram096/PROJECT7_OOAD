@@ -15,6 +15,7 @@ public abstract class Pizza implements SysOut{
     static public Map<Enums.Topping, Integer> toppingsInventory;
     private List<Enums.Topping> toppings;
     private Enums.cookCond cookCond;
+    double tip;
     double total;
 
     Pizza(Map<Enums.Crust, Integer> crustsInventory, Map<Enums.Sauce, Integer> saucesInventory, Map<Enums.Topping, Integer> toppingsInventory) {
@@ -27,6 +28,9 @@ public abstract class Pizza implements SysOut{
     }
     public Enums.cookCond getCookCond() {
         return cookCond;
+    }
+    public void setTip(double tip) {
+        this.tip = tip;
     }
     public Boolean makePizza(Enums.Crust crustType, Enums.Sauce sauceType, List<Enums.Topping> toppings, Customer c) {
         Map<Enums.Topping, Integer> toppingsUsed = new HashMap<>();

@@ -30,20 +30,20 @@ public class DoughMasters implements SysOut {
         departedStaff = new ArrayList<>();
         inventory1 = new ArrayList<>();
         budget = 100000;
-        toppingsInventory.put(Enums.Topping.mushroom, 1);
-        toppingsInventory.put(Enums.Topping.olives, 1);
-        toppingsInventory.put(Enums.Topping.bacon, 1);
-        toppingsInventory.put(Enums.Topping.pepperoni, 1);
-        toppingsInventory.put(Enums.Topping.onion, 1);
-        toppingsInventory.put(Enums.Topping.peppers, 1);
-        toppingsInventory.put(Enums.Topping.sausage, 1);
-        saucesInventory.put(Enums.Sauce.marinara, 1);
-        saucesInventory.put(Enums.Sauce.alfredo, 1);
-        saucesInventory.put(Enums.Sauce.bbq, 1);
-        saucesInventory.put(Enums.Sauce.ranch, 1);
-        crustsInventory.put(Enums.Crust.thin, 1);
-        crustsInventory.put(Enums.Crust.regular, 1);
-        crustsInventory.put(Enums.Crust.deep_dish, 1);
+        toppingsInventory.put(Enums.Topping.mushroom, 0);
+        toppingsInventory.put(Enums.Topping.olives, 0);
+        toppingsInventory.put(Enums.Topping.bacon, 0);
+        toppingsInventory.put(Enums.Topping.pepperoni, 0);
+        toppingsInventory.put(Enums.Topping.onion, 0);
+        toppingsInventory.put(Enums.Topping.peppers, 0);
+        toppingsInventory.put(Enums.Topping.sausage, 0);
+        saucesInventory.put(Enums.Sauce.marinara, 0);
+        saucesInventory.put(Enums.Sauce.alfredo, 0);
+        saucesInventory.put(Enums.Sauce.bbq, 0);
+        saucesInventory.put(Enums.Sauce.ranch, 0);
+        crustsInventory.put(Enums.Crust.thin, 0);
+        crustsInventory.put(Enums.Crust.regular, 0);
+        crustsInventory.put(Enums.Crust.deep_dish, 0);
     }
 
     double getBudget() {
@@ -77,7 +77,7 @@ public class DoughMasters implements SysOut {
 
         ArrayList<Customer> customers = getCustomers(day);
 
-        // managerRestock(inventory);
+        managerRestock(inventory);
         for (Customer c:customers) {
             out("Customer "+c.name+"is buying right now...");
             startPizza(c);
@@ -109,25 +109,62 @@ public class DoughMasters implements SysOut {
     }
 
     void startPizza(Customer c) {
+        double rand1 = Utility.rnd();
         Enums.Crust crusts = c.prefCrust;
         Enums.Sauce sauces = c.prefSauce;
         List<Enums.Topping> toppings = c.prefTopping;
 
+        String toppingsList = String.join(", ", c.prefTopping.stream().map(Enum::toString).toArray(String[]::new));
+        out("The customer "+c.name+" is looking for a "+c.prefSize+", "+c.prefCrust+", "+c.prefSauce+" pizza with "+toppingsList+" for the toppings.");
         Pizza pizza = new customerPizza(crustsInventory, saucesInventory, toppingsInventory);
 
         Boolean pizzaMake = pizza.makePizza(crusts, sauces, toppings, c);
 
         if(pizzaMake) {
             if(Math.random() <= 10){
-                out("Pizza order is taking priority! Fast order option has been added to pizza for 50% of pizza sale price. Old price: "+ pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond()));
+                out("Pizza order is taking priority! Fast order option has been added to pizza for 50% of pizza sale price. Old price: "+ Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
                 FastOrder fastOrder =  new FastOrder(pizza);
-                pizza.total = pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond());
-                pizza.total = fastOrder.getPrice();
-                out("New pizza price: "+pizza.total);
+                if (rand1 < 0.25) {
+                    BadCook badCook = new BadCook();
+                    badCook.cook(pizza, c, inventory);
+                    pizza.total = pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond());
+                    pizza.total = fastOrder.getPrice();
+                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
+                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                } else if (rand1 < 0.65) {
+                    AverageCook averageCook = new AverageCook();
+                    averageCook.cook(pizza, c, inventory);
+                    pizza.total = pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond());
+                    pizza.total = fastOrder.getPrice();
+                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
+                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                } else {
+                    ExpertCook expertCook = new ExpertCook();
+                    expertCook.cook(pizza, c, inventory);
+                    pizza.total = fastOrder.getPrice();
+                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
+                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                }
+            } else {
+                if (rand1 < 0.25) {
+                    BadCook badCook = new BadCook();
+                    badCook.cook(pizza, c, inventory);
+                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
+                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                } else if (rand1 < 0.65) {
+                    AverageCook averageCook = new AverageCook();
+                    averageCook.cook(pizza, c, inventory);
+                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
+                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                } else {
+                    ExpertCook expertCook = new ExpertCook();
+                    expertCook.cook(pizza, c, inventory);
+                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
+                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                }
             }
-            String toppingsList = String.join(", ", c.prefTopping.stream().map(Enum::toString).toArray(String[]::new));
-            out("The customer ordered a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-            moneyIn(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond()));
+
+            moneyIn(pizza.total + pizza.tip);
         }
     }
 
@@ -147,7 +184,7 @@ public class DoughMasters implements SysOut {
     }
 
     public void managerRestock(Inventory inventory) {
-        int minQuantity = 1;
+        int minQuantity = 7;
         int buying = 15;
         for (Enums.Topping topping : inventory.toppingsInventory.keySet()) {
             int quantity = inventory.toppingsInventory.get(topping);
