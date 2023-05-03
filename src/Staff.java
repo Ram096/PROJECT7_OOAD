@@ -213,6 +213,19 @@ class Cashier extends Staff{
         salary = 75; // daily salary
     }
     //implement cashier function
+    public void calculateOrderCost(Pizza pizza, Customer c) {
+        List<Enums.Topping> toppings = c.prefTopping;
+        boolean pay = true;
+        double totalCost = pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c);
+
+        if(pay){
+            out("Cashier: If there will be no more add-ons, your total will be: "+ Utility.asDollar(totalCost)+ " Thank you for ordering at Dough Masters!");
+        }
+        else{
+            out("Sorry, your payment is insufficient. Your order cannot be completed.");
+        }
+
+    }
 }
 class Driver extends Staff {
     static List<String> names = Arrays.asList("Anthony","Austin","Rui","James");
