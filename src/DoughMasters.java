@@ -82,13 +82,9 @@ public class DoughMasters implements SysOut {
         hireNewStaff();
         out("The store is starting to sell...");
 
-        ArrayList<Customer> customers = getCustomers(day);
+        startRestock();
 
-        managerRestock(inventory);
-        for (Customer c:customers) {
-            out("Customer "+c.name+"is buying right now...");
-            startPizza(c);
-        }
+        startPizza(day);
 
         payStaff();
 
@@ -107,11 +103,9 @@ public class DoughMasters implements SysOut {
 
         ArrayList<Customer> customers = getCustomers(day);
 
-        managerRestock(inventory);
-        for (Customer c:customers) {
-            out("Customer "+c.name+"is buying right now...");
-            startPizza(c);
-        }
+        startRestock();
+
+        startPizza(day);
 
         payStaff();
 
@@ -140,136 +134,148 @@ public class DoughMasters implements SysOut {
         staff.add(newStaff);
     }
 
-    void startPizza(Customer c) {
-        Enums.Crust crusts = c.prefCrust;
-        Enums.Sauce sauces = c.prefSauce;
-        List<Enums.Topping> toppings = c.prefTopping;
+    void startPizza(Enums.DayOfWeek day) {
+        ArrayList<Customer> customer = getCustomers(day);
+        ArrayList<Staff> cooks = Staff.getStaffByType(staff, Enums.StaffType.Cook);
 
-        String toppingsList = String.join(", ", c.prefTopping.stream().map(Enum::toString).toArray(String[]::new));
-        out("The customer "+c.name+" is looking for a "+c.prefSize+", "+c.prefCrust+", "+c.prefSauce+" pizza with "+toppingsList+" for the toppings.");
-        Pizza pizza = new customerPizza(crustsInventory, saucesInventory, toppingsInventory);
+        for (Customer c: customer) {
+            Enums.Crust crusts = c.prefCrust;
+            Enums.Sauce sauces = c.prefSauce;
+            List<Enums.Topping> toppings = c.prefTopping;
 
-        Boolean pizzaMake = pizza.makePizza(crusts, sauces, toppings, c);
+            int randomCook = Utility.rndFromRange(0, cooks.size() - 1);
+            Cook cook = (Cook) cooks.get(randomCook);
 
-        if(pizzaMake) {
-            double rand = Utility.rnd();
-            double rand1 = Utility.rnd();
-            pizza.total = pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond());
-            if(rand <= 0.65){
-                out("Extra sauce for 2% of pizza total has been added! Old pizza total: "+ Utility.asDollar(pizza.total));
-                ExtraSauce extraSauce = new ExtraSauce(pizza);
-                pizza.total = extraSauce.getPrice();
-                out("This brings the total of the pizza to: "+ Utility.asDollar(pizza.total));
-                if (rand1 < 0.25) {
-                    BadCook badCook = new BadCook();
-                    badCook.cook(pizza, c, inventory);
-                    pizza.total = extraSauce.getPrice();
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                } else if (rand1 < 0.65) {
-                    AverageCook averageCook = new AverageCook();
-                    averageCook.cook(pizza, c, inventory);
-                    pizza.total = extraSauce.getPrice();
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                } else {
-                    ExpertCook expertCook = new ExpertCook();
-                    expertCook.cook(pizza, c, inventory);
-                    pizza.total = extraSauce.getPrice();
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                }
-            } else if (rand <= .10){
-                out("Fast Order for 50% of pizza total has been added! Pizza order will now take priority and be made fast! Old pizza total: " + Utility.asDollar(pizza.total));
-                FastOrder fastOrder =  new FastOrder(pizza);
-                pizza.total = fastOrder.getPrice();
-                out("This brings the total of the pizza to: "+ pizza.total);
-                if (rand1 < 0.25) {
-                    BadCook badCook = new BadCook();
-                    badCook.cook(pizza, c, inventory);
-                    pizza.total = fastOrder.getPrice();
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                } else if (rand1 < 0.65) {
-                    AverageCook averageCook = new AverageCook();
-                    averageCook.cook(pizza, c, inventory);
-                    pizza.total = fastOrder.getPrice();
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                } else {
-                    ExpertCook expertCook = new ExpertCook();
-                    expertCook.cook(pizza, c, inventory);
-                    pizza.total = fastOrder.getPrice();
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                }
-            } else if (rand <= .15){
-                out("Extra meat toppings for 20% of pizza total has been added! More sausage, bacon and pepperoni have been added Old pizza total: "+ Utility.asDollar(pizza.total));
-                MeatToppings meatToppings = new MeatToppings(pizza);
-                pizza.total = meatToppings.getPrice();
-                out("This brings the total of the pizza to: " + Utility.asDollar(pizza.total));
-                if (rand1 < 0.25) {
-                    BadCook badCook = new BadCook();
-                    badCook.cook(pizza, c, inventory);
-                    pizza.total = meatToppings.getPrice();
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                } else if (rand1 < 0.65) {
-                    AverageCook averageCook = new AverageCook();
-                    averageCook.cook(pizza, c, inventory);
-                    pizza.total = meatToppings.getPrice();
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                } else {
-                    ExpertCook expertCook = new ExpertCook();
-                    expertCook.cook(pizza, c, inventory);
-                    pizza.total = meatToppings.getPrice();
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                }
-            } else if(rand <= .20){
-                out("Extra cheese for 10% of pizza total has been added! Old pizza total: "+ Utility.asDollar(pizza.total));
-                ExtraCheese extraCheese = new ExtraCheese(pizza);
-                pizza.total = extraCheese.getPrice();
-                out("This brings the total of the pizza to: "+ Utility.asDollar(pizza.total));
-                if (rand1 < 0.25) {
-                    BadCook badCook = new BadCook();
-                    badCook.cook(pizza, c, inventory);
-                    pizza.total = extraCheese.getPrice();
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                } else if (rand1 < 0.65) {
-                    AverageCook averageCook = new AverageCook();
-                    averageCook.cook(pizza, c, inventory);
-                    pizza.total = extraCheese.getPrice();
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                } else {
-                    ExpertCook expertCook = new ExpertCook();
-                    expertCook.cook(pizza, c, inventory);
-                    pizza.total = extraCheese.getPrice();
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                }
+            String toppingsList = String.join(", ", c.prefTopping.stream().map(Enum::toString).toArray(String[]::new));
+            if(c.studentStat == Enums.Student.not_student && (day == Enums.DayOfWeek.Fri || day == Enums.DayOfWeek.Sat || day == Enums.DayOfWeek.Sun)) {
+                out("The customer " + c.name + " is a student and is getting 10% off and is looking for a " + c.prefSize + ", " + c.prefCrust + ", " + c.prefSauce + " pizza with " + toppingsList + " for the toppings.");
             } else {
-                if (rand1 < 0.25) {
-                    BadCook badCook = new BadCook();
-                    badCook.cook(pizza, c, inventory);
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                } else if (rand1 < 0.65) {
-                    AverageCook averageCook = new AverageCook();
-                    averageCook.cook(pizza, c, inventory);
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                } else {
-                    ExpertCook expertCook = new ExpertCook();
-                    expertCook.cook(pizza, c, inventory);
-                    out("The customer "+c.name+" got a "+ c.prefSize +" pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond())));
-                    out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
-                }
+                out("The customer " + c.name + " is looking for a " + c.prefSize + ", " + c.prefCrust + ", " + c.prefSauce + " pizza with " + toppingsList + " for the toppings.");
             }
-            moneyIn(pizza.total + pizza.tip);
+            Pizza pizza = new customerPizza(crustsInventory, saucesInventory, toppingsInventory);
+
+            boolean pizzaMake = cook.makePizza(crusts, sauces, toppings, c, inventory, pizza);
+
+
+            if (pizzaMake) {
+                double rand = Utility.rnd();
+                pizza.total = pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c);
+                if (rand <= 0.65) {
+                    out("Extra sauce for 2% of pizza total has been added! Old pizza total: " + Utility.asDollar(pizza.total));
+                    ExtraSauce extraSauce = new ExtraSauce(pizza);
+                    pizza.total = extraSauce.getPrice();
+                    out("This brings the total of the pizza to: " + Utility.asDollar(pizza.total));
+                    if (cook.getCook() == Enums.cook.bad_cook) {
+                        BadCook badCook = new BadCook();
+                        badCook.cook(pizza, c, inventory);
+                        pizza.total = extraSauce.getPrice();
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    } else if (cook.getCook() == Enums.cook.average_cook) {
+                        AverageCook averageCook = new AverageCook();
+                        averageCook.cook(pizza, c, inventory);
+                        pizza.total = extraSauce.getPrice();
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    } else {
+                        ExpertCook expertCook = new ExpertCook();
+                        expertCook.cook(pizza, c, inventory);
+                        pizza.total = extraSauce.getPrice();
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    }
+                } else if (rand <= .10) {
+                    out("Fast Order for 50% of pizza total has been added! Pizza order will now take priority and be made fast! Old pizza total: " + Utility.asDollar(pizza.total));
+                    FastOrder fastOrder = new FastOrder(pizza);
+                    pizza.total = fastOrder.getPrice();
+                    out("This brings the total of the pizza to: " + pizza.total);
+                    if (cook.getCook() == Enums.cook.bad_cook) {
+                        BadCook badCook = new BadCook();
+                        badCook.cook(pizza, c, inventory);
+                        pizza.total = fastOrder.getPrice();
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    } else if (cook.getCook() == Enums.cook.average_cook) {
+                        AverageCook averageCook = new AverageCook();
+                        averageCook.cook(pizza, c, inventory);
+                        pizza.total = fastOrder.getPrice();
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    } else {
+                        ExpertCook expertCook = new ExpertCook();
+                        expertCook.cook(pizza, c, inventory);
+                        pizza.total = fastOrder.getPrice();
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    }
+                } else if (rand <= .15) {
+                    out("Extra meat toppings for 20% of pizza total has been added! More sausage, bacon and pepperoni have been added Old pizza total: " + Utility.asDollar(pizza.total));
+                    MeatToppings meatToppings = new MeatToppings(pizza);
+                    pizza.total = meatToppings.getPrice();
+                    out("This brings the total of the pizza to: " + Utility.asDollar(pizza.total));
+                    if (cook.getCook() == Enums.cook.bad_cook) {
+                        BadCook badCook = new BadCook();
+                        badCook.cook(pizza, c, inventory);
+                        pizza.total = meatToppings.getPrice();
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    } else if (cook.getCook() == Enums.cook.average_cook) {
+                        AverageCook averageCook = new AverageCook();
+                        averageCook.cook(pizza, c, inventory);
+                        pizza.total = meatToppings.getPrice();
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    } else {
+                        ExpertCook expertCook = new ExpertCook();
+                        expertCook.cook(pizza, c, inventory);
+                        pizza.total = meatToppings.getPrice();
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    }
+                } else if (rand <= .20) {
+                    out("Extra cheese for 10% of pizza total has been added! Old pizza total: " + Utility.asDollar(pizza.total));
+                    ExtraCheese extraCheese = new ExtraCheese(pizza);
+                    pizza.total = extraCheese.getPrice();
+                    out("This brings the total of the pizza to: " + Utility.asDollar(pizza.total));
+                    if (cook.getCook() == Enums.cook.bad_cook) {
+                        BadCook badCook = new BadCook();
+                        badCook.cook(pizza, c, inventory);
+                        pizza.total = extraCheese.getPrice();
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    } else if (cook.getCook() == Enums.cook.average_cook) {
+                        AverageCook averageCook = new AverageCook();
+                        averageCook.cook(pizza, c, inventory);
+                        pizza.total = extraCheese.getPrice();
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    } else {
+                        ExpertCook expertCook = new ExpertCook();
+                        expertCook.cook(pizza, c, inventory);
+                        pizza.total = extraCheese.getPrice();
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    }
+                } else {
+                    if (cook.getCook() == Enums.cook.bad_cook) {
+                        BadCook badCook = new BadCook();
+                        badCook.cook(pizza, c, inventory);
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    } else if (cook.getCook() == Enums.cook.average_cook) {
+                        AverageCook averageCook = new AverageCook();
+                        averageCook.cook(pizza, c, inventory);
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    } else {
+                        ExpertCook expertCook = new ExpertCook();
+                        expertCook.cook(pizza, c, inventory);
+                        out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList + " All for " + Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c)));
+                        out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
+                    }
+                }
+                moneyIn(pizza.total + pizza.tip);
+            }
         }
     }
 
@@ -302,48 +308,13 @@ public class DoughMasters implements SysOut {
         }
     }
 
-    public void managerRestock(Inventory inventory) {
-        int minQuantity = 7;
-        int buying = 15;
-        for (Enums.Topping topping : inventory.toppingsInventory.keySet()) {
-            int quantity = inventory.toppingsInventory.get(topping);
-            if (quantity < minQuantity) {
-                inventory.toppingsInventory.put(topping, quantity + buying);
-                out("The manager has added "+buying+" of "+topping+" to the inventory...");
-                moneyOut(.99 * minQuantity);
-            }
-        }
+    public void startRestock() {
+        ArrayList<Staff> manager = Staff.getStaffByType(staff, Enums.StaffType.Manager);
 
-        for (Enums.Sauce sauce : inventory.saucesInventory.keySet()) {
-            int quantity = inventory.saucesInventory.get(sauce);
-            if (quantity < minQuantity) {
-                inventory.saucesInventory.put(sauce, quantity + buying);
-                out("The manager has added "+buying+" of "+sauce+" to the inventory...");
-                if(sauce == Enums.Sauce.bbq) {
-                    moneyOut(3.46 * buying);
-                } else if (sauce == Enums.Sauce.marinara) {
-                    moneyOut(2.96 * buying);
-                } else if (sauce == Enums.Sauce.ranch) {
-                    moneyOut(3.99 * buying);
-                } else {
-                    moneyOut(4.50 * buying);
-                }
-            }
-        }
+        int randomManager = Utility.rndFromRange(0, manager.size() - 1);
+        Manager managers = (Manager) manager.get(randomManager);
 
-        for (Enums.Crust crust : inventory.crustsInventory.keySet()) {
-            int quantity = inventory.crustsInventory.get(crust);
-            if (quantity < minQuantity) {
-                inventory.crustsInventory.put(crust, quantity + buying);
-                out("The manager has added "+buying+" of "+crust+" to the inventory...");
-                if(crust == Enums.Crust.deep_dish) {
-                    moneyOut(2.50 * buying);
-                } else if (crust == Enums.Crust.thin) {
-                    moneyOut(1.50 * buying);
-                } else {
-                    moneyOut(2.00 * buying);
-                }
-            }
-        }
+        out("The manager "+managers.name+" is currently checking the inventory...");
+        moneyOut(managers.managerRestock(inventory));
     }
 }

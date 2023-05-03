@@ -8,4 +8,5 @@ public class Enums {
     public enum Size {small, medium, large, xLarge}
     public enum cookCond {under_cooked, just_Right, over_cooked}
     public enum Student {student, not_student}
+    public enum cook {bad_cook, average_cook, expert_cook}
 }
