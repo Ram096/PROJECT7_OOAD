@@ -119,7 +119,6 @@ public abstract class Pizza implements SysOut{
                 return total;
             } else {
                 double total = ((1.99 * toppings.size()) + 17.99);
-                this.total = total;
                 return total;
             }
         }

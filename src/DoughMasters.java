@@ -86,7 +86,9 @@ public class DoughMasters implements SysOut {
 
         startPizza(day);
 
-        payStaff();
+        if (day == Enums.DayOfWeek.Sun) {
+            payStaff();
+        }
 
         out("The money spent today is "+ Utility.asDollar(getMoneySpent()));
 
@@ -105,7 +107,9 @@ public class DoughMasters implements SysOut {
 
         startPizza(day);
 
-        payStaff();
+        if (day == Enums.DayOfWeek.Sun) {
+            payStaff();
+        }
 
         out("The money spent today is "+ Utility.asDollar(getMoneySpent()));
 
@@ -285,8 +289,8 @@ public class DoughMasters implements SysOut {
         int customerCount;
         int studentCount = 0;
         if (day == Enums.DayOfWeek.Fri || day == Enums.DayOfWeek.Sat || day == Enums.DayOfWeek.Sun) {
-            customerMin = 2;
-            customerMax = 2;
+            customerMin = 8;
+            customerMax = 14;
             customerCount = Utility.rndFromRange(customerMin,customerMax);
             for (int i=1; i<=customerCount; ++i) {
                 buyers.add(new Customer());
@@ -297,8 +301,8 @@ public class DoughMasters implements SysOut {
             out("The DoughMasters has "+customerCount+" buyers with "+studentCount+" of them being students today...");
             return buyers;
         } else {
-            customerMin = 2;
-            customerMax = 2;
+            customerMin = 15;
+            customerMax = 21;
             customerCount = Utility.rndFromRange(customerMin,customerMax);
             for (int i=1; i<=customerCount; ++i) buyers.add(new Customer());
             out("The DoughMasters has "+customerCount+" buyers today...");
