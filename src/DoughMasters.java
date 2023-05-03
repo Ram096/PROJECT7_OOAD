@@ -111,7 +111,7 @@ public class DoughMasters implements SysOut {
         }
         out("Orders completed today: " + orderData.getTotalOrders());
 
-        out("The money spent today is "+ Utility.asDollar(getMoneySpent()));
+        out("Current Profit: "+ Utility.asDollar(getMoneySpent()));
 
         out("The current Inventory at the end of the day"+inventory.getInventory());
     }
@@ -151,7 +151,7 @@ public class DoughMasters implements SysOut {
 
         out("Orders completed today: " + orderData.getTotalOrders());
 
-        out("The money spent today is "+ Utility.asDollar(getMoneySpent()));
+        out("Current Profit: "+ Utility.asDollar(getMoneySpent()));
 
         out("The current Inventory at the end of the day"+inventory.getInventory());
     }
