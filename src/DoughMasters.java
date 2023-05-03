@@ -50,7 +50,7 @@ public class DoughMasters implements SysOut {
         return budget;
     }
     double getMoneySpent() {
-        double moneyOut = budget - 50000;
+        double moneyOut = budget - 100000;
         return moneyOut;
     }
 
@@ -66,8 +66,15 @@ public class DoughMasters implements SysOut {
             out("***Budget overrun*** Added 50K, budget now: " + Utility.asDollar(budget));
         }
     }
+    void payStaff() {
+        for (Staff s: staff) {
+            moneyOut(s.salary);  // money comes from the FNCD
+            s.salaryEarned += s.salary;  // they get paid
+            s.daysWorked += 1;// they worked another day
+        }
+    }
 
-    void openEveryDay(Enums.DayOfWeek day) {
+    void weekDays(Enums.DayOfWeek day) {
         out("------------ DOUGH MASTERS -------------");
         out("Our Pizza store is opening...");
         out("Checking our inventory...\n");
@@ -82,6 +89,31 @@ public class DoughMasters implements SysOut {
             out("Customer "+c.name+"is buying right now...");
             startPizza(c);
         }
+
+        payStaff();
+
+        out("The money spent today is "+ Utility.asDollar(getMoneySpent()));
+
+        out("The current Inventory at the end of the day"+inventory.getInventory());
+    }
+
+    void weekendDays(Enums.DayOfWeek day) {
+        out("------------ DOUGH MASTERS -------------");
+        out("Our Pizza store is opening...");
+        out("Checking our inventory...\n");
+        out("Checking our Staff...\n");
+        hireNewStaff();
+        out("The store is starting to sell...");
+
+        ArrayList<Customer> customers = getCustomers(day);
+
+        managerRestock(inventory);
+        for (Customer c:customers) {
+            out("Customer "+c.name+"is buying right now...");
+            startPizza(c);
+        }
+
+        payStaff();
 
         out("The money spent today is "+ Utility.asDollar(getMoneySpent()));
 
@@ -241,19 +273,33 @@ public class DoughMasters implements SysOut {
         }
     }
 
-    ArrayList<Customer> getCustomers(Enums.DayOfWeek day) {
-        // 0 to 5 buyers arrive (2-8 on Fri/Sat)
-        int customerMin = 2;  //normal Mon-Thur
-        int customerMax = 2;
-        if (day == Enums.DayOfWeek.Fri || day == Enums.DayOfWeek.Sat || day == Enums.DayOfWeek.Sun) {
-            customerMin = 2;
-            customerMax = 2;
-        }
+    public ArrayList<Customer> getCustomers(Enums.DayOfWeek day) {
+        // 15 to 20 buyers arrive (2-8 on Fri/Sat/Sun)
         ArrayList<Customer> buyers = new ArrayList<Customer>();
-        int customerCount = Utility.rndFromRange(customerMin,customerMax);
-        for (int i=1; i<=customerCount; ++i) buyers.add(new Customer());
-        out("The DoughMasters has "+customerCount+" buyers today...");
-        return buyers;
+        int customerMin;  //normal Mon-Thur
+        int customerMax;
+        int customerCount;
+        int studentCount = 0;
+        if (day == Enums.DayOfWeek.Fri || day == Enums.DayOfWeek.Sat || day == Enums.DayOfWeek.Sun) {
+            customerMin = 5;
+            customerMax = 10;
+            customerCount = Utility.rndFromRange(customerMin,customerMax);
+            for (int i=1; i<=customerCount; ++i) {
+                buyers.add(new Customer());
+                if (buyers.get(i - 1).studentStat == Enums.Student.student) {
+                    studentCount++;
+                }
+            }
+            out("The DoughMasters has "+customerCount+" buyers with "+studentCount+" of them being students today...");
+            return buyers;
+        } else {
+            customerMin = 8;
+            customerMax = 14;
+            customerCount = Utility.rndFromRange(customerMin,customerMax);
+            for (int i=1; i<=customerCount; ++i) buyers.add(new Customer());
+            out("The DoughMasters has "+customerCount+" buyers today...");
+            return buyers;
+        }
     }
 
     public void managerRestock(Inventory inventory) {

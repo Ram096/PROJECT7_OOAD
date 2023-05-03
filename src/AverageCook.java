@@ -20,11 +20,11 @@ public class AverageCook implements CookMethod, SysOut{
             int tip = Utility.rndFromRange(0,20);
             pizza.setTip(tip/100.0);
             if (tip < 10) {
-                out("The pizza was over cooked by our average chef and the person gave a "+tip+"% tip being "+Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond()) * (tip/100.0))+" to the user");
+                out("The pizza was over cooked by our average chef and the person was not happy and gave a bad tip being a "+tip+"% tip being "+Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond()) * (tip/100.0))+" to the user");
             } else if (tip < 15) {
-                out("The pizza was over cooked by our average chef and the person gave a "+tip+"% tip being "+Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond()) * (tip/100.0))+" to the user");
+                out("The pizza was over cooked by our average chef and the person felt generous by giving a "+tip+"% tip being "+Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond()) * (tip/100.0))+" to the user");
             } else {
-                out("The pizza was over cooked by our average chef and the person gave a "+tip+"% tip being "+Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond()) * (tip/100.0))+" to the user");
+                out("The pizza was over cooked by our average chef and the person luckily gave a nice tip being a "+tip+"% tip being "+Utility.asDollar(pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond()) * (tip/100.0))+" to the user");
             }
         }
 

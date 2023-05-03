@@ -9,6 +9,7 @@ public class Customer implements SysOut {
     Enums.Size prefSize;
     Enums.Sauce prefSauce;
     Enums.Crust prefCrust;
+    Enums.Student studentStat;
     List<Enums.Topping> prefTopping;
     static List<String> names = Arrays.asList("Gunna", "Josie", "Alex", "Diana");
     static Namer namer = new Namer(names);
@@ -16,15 +17,11 @@ public class Customer implements SysOut {
     Customer(){
         type = Utility.randomEnum(Enums.BuyerType.class);
         name = namer.getNext();
-        out("Their name is "+name);
         prefSize = Utility.randomEnum(Enums.Size.class);
-        out("They prefer a size of "+prefSize);
         prefCrust = Utility.randomEnum(Enums.Crust.class);
-        out("They prefer a crust of "+prefCrust);
         prefSauce = Utility.randomEnum(Enums.Sauce.class);
-        out("They prefer a sauce of "+prefSauce);
         prefTopping = getToppings();
-        out("They prefer toppings of "+prefTopping);
+        studentStat = getStudent();
     }
 
     public List<Enums.Topping> getToppings() {
@@ -38,5 +35,17 @@ public class Customer implements SysOut {
             availableToppings.remove(rndIndex);
         }
         return selectedToppings;
+    }
+
+    public Enums.Student getStudent() {
+        double rand = Utility.rnd();
+        Enums.Student studentStat;
+
+        if (rand < 0.3) {
+            studentStat = Enums.Student.student;
+        } else {
+            studentStat = Enums.Student.not_student;
+        }
+        return studentStat;
     }
 }
