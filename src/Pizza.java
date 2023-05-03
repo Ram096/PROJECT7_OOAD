@@ -1,8 +1,6 @@
-import java.util.Collections;
-import java.sql.Array;
+import java.util.Collections;;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +31,6 @@ public abstract class Pizza implements SysOut{
     public void setTip(double tip) {
         this.tip = tip;
     }
-
 
     public Enums.Crust replaceCrust(Enums.Crust crust) {
         List<Enums.Crust> remainingCrusts = new ArrayList<>(Arrays.asList(Enums.Crust.values()));

@@ -25,6 +25,8 @@ public class DoughMasters implements SysOut {
     Map<Enums.Sauce, Integer> saucesInventory = new HashMap<>();
     Map<Enums.Crust, Integer> crustsInventory = new HashMap<>();
     Inventory inventory = new Inventory(toppingsInventory, saucesInventory, crustsInventory);
+    Enums.BuyerType orderMethod;
+
     DoughMasters() {
         staff = new ArrayList<>();
         departedStaff = new ArrayList<>();
@@ -83,12 +85,31 @@ public class DoughMasters implements SysOut {
         out("The store is starting to sell...");
 
         startRestock();
+        ArrayList<Customer> customer = getCustomers(day);
+        ArrayList<Staff> cooks = Staff.getStaffByType(staff, Enums.StaffType.Cook);
+        OrderData orderData = new OrderData();
+        PizzaOrderDisplay orderDisplay = new PizzaOrderDisplay(orderData);
 
-        startPizza(day);
+        for (Customer c: customer) {
+            orderMethod = Utility.randomEnum(Enums.BuyerType.class);
+            if (orderMethod == Enums.BuyerType.delivery) {
+                startPizza(day, c, cooks);
+                Delivery pizzaDelivery = new Delivery();
+                pizzaDelivery.deliver(c);
+                orderData.addOrder(c.name);
+                orderData.getOrders();
+            } else {
+                startPizza(day, c, cooks);
+                orderData.addOrder(c.name);
+                orderData.getOrders();
+            }
+
+        }
 
         if (day == Enums.DayOfWeek.Sun) {
             payStaff();
         }
+        out("Orders completed today: " + orderData.getTotalOrders());
 
         out("The money spent today is "+ Utility.asDollar(getMoneySpent()));
 
@@ -104,12 +125,31 @@ public class DoughMasters implements SysOut {
         out("The store is starting to sell...");
 
         startRestock();
+        ArrayList<Customer> customer = getCustomers(day);
+        ArrayList<Staff> cooks = Staff.getStaffByType(staff, Enums.StaffType.Cook);
+        OrderData orderData = new OrderData();
+        PizzaOrderDisplay orderDisplay = new PizzaOrderDisplay(orderData);
 
-        startPizza(day);
+        for (Customer c: customer) {
+            orderMethod = Utility.randomEnum(Enums.BuyerType.class);
+            if (orderMethod == Enums.BuyerType.delivery) {
+                startPizza(day, c, cooks);
+                Delivery pizzaDelivery = new Delivery();
+                pizzaDelivery.deliver(c);
+                orderData.addOrder(c.name);
+                orderData.getOrders();
+            } else {
+                startPizza(day, c, cooks);
+                orderData.addOrder(c.name);
+                orderData.getOrders();
+            }
+        }
 
         if (day == Enums.DayOfWeek.Sun) {
             payStaff();
         }
+
+        out("Orders completed today: " + orderData.getTotalOrders());
 
         out("The money spent today is "+ Utility.asDollar(getMoneySpent()));
 
@@ -136,11 +176,8 @@ public class DoughMasters implements SysOut {
         staff.add(newStaff);
     }
 
-    void startPizza(Enums.DayOfWeek day) {
-        ArrayList<Customer> customer = getCustomers(day);
-        ArrayList<Staff> cooks = Staff.getStaffByType(staff, Enums.StaffType.Cook);
+    void startPizza(Enums.DayOfWeek day, Customer c, ArrayList<Staff> cooks) {
 
-        for (Customer c: customer) {
             Enums.Crust crusts = c.prefCrust;
             Enums.Sauce sauces = c.prefSauce;
             List<Enums.Topping> toppings = c.prefTopping;
@@ -278,7 +315,7 @@ public class DoughMasters implements SysOut {
                 }
                 moneyIn(pizza.total + pizza.tip);
             }
-        }
+
     }
 
     public ArrayList<Customer> getCustomers(Enums.DayOfWeek day) {

@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6bcc851-ee90-4092-b9e4-957de4d39a3f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Delivery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Observer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/OrderData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Subject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DoughMasters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DoughMasters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pizza.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pizza.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -66,7 +72,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="74c9ceb4-2f10-43c8-90e0-663998cf8e9d" name="Changes" comment="" />
+      <changelist id="a6bcc851-ee90-4092-b9e4-957de4d39a3f" name="Changes" comment="" />
       <created>1681690722528</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -76,6 +82,7 @@
       <workItem from="1681885160560" duration="1154000" />
       <workItem from="1681690723715" duration="4281000" />
       <workItem from="1681841326529" duration="5236000" />
+      <workItem from="1683142276487" duration="12235000" />
     </task>
     <servers />
   </component>
