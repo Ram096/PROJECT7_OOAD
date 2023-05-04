@@ -1,3 +1,12 @@
+/*
+Pizza class include lists of crusts, sauces, and toppings, as well as inventory maps for each of these ingredients. 
+There is also a cook condition attribute and a tip attribute. The Pizza constructor takes inventory maps as input and sets the total price to 0.
+
+The Pizza class has several methods for replacing ingredients in the pizza with other ingredients, based on availability in the inventory. There is also a getPrice method that takes a list of toppings, pizza size, cook condition, and a Customer object, and calculates the price of the pizza based on these inputs.
+The customerPizza class extends Pizza and has a constructor that takes the inventory maps as input and creates a custom pizza based on user input.
+*/
+
+
 import java.util.Collections;;
 import java.util.ArrayList;
 import java.util.Arrays;
