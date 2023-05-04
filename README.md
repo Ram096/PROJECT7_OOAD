@@ -21,4 +21,5 @@ In addition, we implemented an app designed in Figma that includes a number of v
 
     - A confirmation screen: Once the order is complete, users would see a confirmation screen that includes details about the order, estimated delivery or pickup time, and any other relevant information.
 
-    Overall, we have successfully developed a Java-based pizza ordering and management system for a pizza store. Our project includes various features such as adding and updating pizzas, creating and managing orders, and generating reports. Our system utilizes object-oriented programming principles such as inheritance, encapsulation, and polymorphism to create a well-organized and modular codebase.
+
+Overall, we have successfully developed a Java-based pizza ordering and management system for a pizza store. Our project includes various features such as adding and updating pizzas, creating and managing orders, and generating reports. Our system utilizes object-oriented programming principles such as inheritance, encapsulation, and polymorphism to create a well-organized and modular codebase.
