@@ -12,54 +12,27 @@ public class Inventory {
         this.crustsInventory = crustsInventory;
     }
 
-    public boolean checkInventory(Enums.Topping topping) {
-        return toppingsInventory.getOrDefault(topping, 0) > 0;
-    }
-
-    public boolean checkInventory(Enums.Sauce sauce) {
-        return saucesInventory.getOrDefault(sauce, 0) > 0;
-    }
-
-    public boolean checkInventory(Enums.Crust crust) {
-        return crustsInventory.getOrDefault(crust, 0) > 0;
-    }
-
     public void removeInventory(Enums.Topping topping) {
         toppingsInventory.put(topping, toppingsInventory.getOrDefault(topping, 0) - 1);
     }
 
-    public void restockInventory(Map<Enums.Topping, Integer> newToppings, Map<Enums.Sauce, Integer> newSauces, Map<Enums.Crust, Integer> newCrusts) {
-        for (Map.Entry<Enums.Topping, Integer> entry : newToppings.entrySet()) {
-            Enums.Topping topping = entry.getKey();
-            int quantity = entry.getValue();
-            toppingsInventory.put(topping, toppingsInventory.getOrDefault(topping, 0) + quantity);
-        }
-        for (Map.Entry<Enums.Sauce, Integer> entry : newSauces.entrySet()) {
-            Enums.Sauce sauce = entry.getKey();
-            int quantity = entry.getValue();
-            saucesInventory.put(sauce, saucesInventory.getOrDefault(sauce, 0) + quantity);
-        }
-        for (Map.Entry<Enums.Crust, Integer> entry : newCrusts.entrySet()) {
-            Enums.Crust crust = entry.getKey();
-            int quantity = entry.getValue();
-            crustsInventory.put(crust, crustsInventory.getOrDefault(crust, 0) + quantity);
-        }
-    }
-
-    public Map<String, Map<String, Integer>> getInventory() {
+    public Map<String, Map<String, Integer>> getInventory() { // Allowing the user to see the inventory for each of the ingredients
         Map<String, Map<String, Integer>> inventory = new HashMap<>();
         inventory.put("toppings", new HashMap<>());
         inventory.put("sauces", new HashMap<>());
         inventory.put("crusts", new HashMap<>());
 
+        // Showing inventory of all toppings
         for (Map.Entry<Enums.Topping, Integer> entry : toppingsInventory.entrySet()) {
             inventory.get("toppings").put(entry.getKey().toString(), entry.getValue());
         }
 
+        // Showing inventory of all sauces
         for (Map.Entry<Enums.Sauce, Integer> entry : saucesInventory.entrySet()) {
             inventory.get("sauces").put(entry.getKey().toString(), entry.getValue());
         }
 
+        // Showing inventory of all crusts
         for (Map.Entry<Enums.Crust, Integer> entry : crustsInventory.entrySet()) {
             inventory.get("crusts").put(entry.getKey().toString(), entry.getValue());
         }

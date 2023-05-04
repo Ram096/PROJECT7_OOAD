@@ -7,6 +7,7 @@ public class ExpertCook implements CookMethod, SysOut{
         double rand1 = Math.random();
         double rand2 = Math.random();
 
+        // Determining the pizza quality which in turn changes the random tip that as awarded
         if (rand1 < 0.1) {
             pizza.setCond(Enums.cookCond.under_cooked);
             out("The pizza was sadly undercooked by our expert chef and the person got a 50% discount off and no tip was given");
@@ -28,19 +29,23 @@ public class ExpertCook implements CookMethod, SysOut{
             }
         }
 
+        // Chance of cook randomly using more ingredients due to overcooking or so on
         if (rand2 < 0.1) {
+            // random number of toppings being chosen from 1 to amount of toppings
             int randomTopNum = Utility.rndFromRange(1, c.prefTopping.size());
 
             List<Enums.Topping> shuffleList = new ArrayList<>(c.prefTopping);
             List<Enums.Topping> extraToppings = new ArrayList<>();
             Collections.shuffle(shuffleList);
 
+            // removes extra topping from the inventory
             for (int j = randomTopNum - 1; j >= 0; j--) {
                 i.removeInventory(shuffleList.get(j));
                 extraToppings.add(shuffleList.get(j));
                 shuffleList.remove(j);
             }
 
+            // Pushes out the toppings in a readable manner
             String toppingsList = String.join(", ", extraToppings.stream().map(Enum::toString).toArray(String[]::new));
             out("Sadly the expert chef had a few problems and used up 1 extra of each of these ingredients: "+toppingsList);
         }

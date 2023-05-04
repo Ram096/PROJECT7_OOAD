@@ -60,13 +60,17 @@ class Manager extends Staff {
         salary = 150;
     }
 
+    // Restocks the inventory if certain things are under stock at the beginning of the day and returns the amount of money needed to pay for it all
     public double managerRestock(Inventory inventory) {
-        int minQuantity = 7;
-        int buying = 15;
+        int minQuantity = 7; // There should be a minimum of 7 of each item
+        int buying = 15; // Buys in quantity of 10
         double moneyOut = 0;
         int buyCount = 0;
+
+        // Checking each topping if they are above the min quanity
         for (Enums.Topping topping : inventory.toppingsInventory.keySet()) {
             int quantity = inventory.toppingsInventory.get(topping);
+            // Each topping is .99 cents
             if (quantity < minQuantity) {
                 inventory.toppingsInventory.put(topping, quantity + buying);
                 out("The manager has added "+buying+" of "+topping+" to the inventory...");
@@ -75,11 +79,13 @@ class Manager extends Staff {
             }
         }
 
+        // Checking each sauce if they are above the min quanity
         for (Enums.Sauce sauce : inventory.saucesInventory.keySet()) {
             int quantity = inventory.saucesInventory.get(sauce);
             if (quantity < minQuantity) {
                 inventory.saucesInventory.put(sauce, quantity + buying);
                 out("The manager has added "+buying+" of "+sauce+" to the inventory...");
+                // Sauces prices vary depending on each one of them
                 if(sauce == Enums.Sauce.bbq) {
                     moneyOut += (1.46 * buying);
                     buyCount++;
@@ -96,11 +102,13 @@ class Manager extends Staff {
             }
         }
 
+        // Checking each crust if they are above the min quanity
         for (Enums.Crust crust : inventory.crustsInventory.keySet()) {
             int quantity = inventory.crustsInventory.get(crust);
             if (quantity < minQuantity) {
                 inventory.crustsInventory.put(crust, quantity + buying);
                 out("The manager has added "+buying+" of "+crust+" to the inventory...");
+                // Crust prices vary depending on each one of them
                 if(crust == Enums.Crust.deep_dish) {
                     moneyOut += (1.50 * buying);
                     buyCount++;
@@ -113,6 +121,7 @@ class Manager extends Staff {
                 }
             }
         }
+        // Determining number of items bought for the day
         out("The manager "+name+" has restocked "+buyCount+" different things!");
         return moneyOut;
     }
@@ -129,6 +138,7 @@ class Cook extends Staff{
         salary = 100;
         cookExp = getCook();
     }
+    // Determining what type of cook the person is
     public Enums.cook getCook() {
         double rand = Utility.rnd();
         Enums.cook cook;
@@ -142,22 +152,25 @@ class Cook extends Staff{
         }
         return cook;
     }
+    // Creates the pizza the customer wants and if the pizza is able to be made then it will return true otherwise false
     public Boolean makePizza(Enums.Crust crustType, Enums.Sauce sauceType, List<Enums.Topping> toppings, Customer c, Inventory i, Pizza pizza) {
         Map<Enums.Topping, Integer> toppingsUsed = new HashMap<>();
         List<Enums.Topping> newToppings = new ArrayList<>();
         boolean canMakePizza = true;
 
+        // Checking whether the customers crust choice is in stock if not replace with a random option
         if (i.crustsInventory.get(crustType) < 1) {
             Enums.Crust newCrust = pizza.replaceCrust(crustType);
             if (newCrust != null) {
                 out("We have replaced " + crustType + " with the person's 2nd choice " + newCrust + ".");
                 crustType = newCrust;
                 c.prefCrust = newCrust;
-            } else {
+            } else { // No other crusts so pizza can't be made
                 canMakePizza = false;
             }
         }
 
+        // Checking whether the customers sauce choice is in stock if not replace with a random option
         if (canMakePizza) {
             if (i.saucesInventory.get(sauceType) < 1) {
                 Enums.Sauce newSauce = pizza.replaceSauce(sauceType);
@@ -165,12 +178,13 @@ class Cook extends Staff{
                     out("We have replaced " + sauceType + " with the person's 2nd choice " + newSauce + ".");
                     sauceType = newSauce;
                     c.prefSauce = newSauce;
-                } else {
+                } else { // No other sauces available so pizza can't be made
                     canMakePizza = false;
                 }
             }
         }
 
+        // Checking for each topping choice whether it is in stock if not replace with a random option
         if (canMakePizza) {
             for (Enums.Topping topping : toppings) {
                 if (i.toppingsInventory.get(topping) < 1) {
@@ -181,13 +195,14 @@ class Cook extends Staff{
                     } else {
                         canMakePizza = false;
                     }
-                }
+                } // Use the new toppings
                 toppingsUsed.put(topping, toppingsUsed.getOrDefault(topping, 0) + 1);
                 newToppings.add(topping);
             }
             c.prefTopping = newToppings;
         }
 
+        // Pizza is able to be made meaning there was a sauce, crust, and toppings where available
         if (canMakePizza) {
             i.crustsInventory.put(crustType, i.crustsInventory.get(crustType) - 1);
             i.saucesInventory.put(sauceType, i.saucesInventory.get(sauceType) - 1);

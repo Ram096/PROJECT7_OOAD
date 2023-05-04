@@ -32,6 +32,7 @@ public abstract class Pizza implements SysOut{
         this.tip = tip;
     }
 
+    // Checks to make sure there is a crust that can be swapped by checking inventory;
     public Enums.Crust replaceCrust(Enums.Crust crust) {
         List<Enums.Crust> remainingCrusts = new ArrayList<>(Arrays.asList(Enums.Crust.values()));
         remainingCrusts.remove(crust);
@@ -49,6 +50,7 @@ public abstract class Pizza implements SysOut{
         return null;
     }
 
+    // Checks to make sure there is a sauce that can be swapped by checking inventory;
     public Enums.Sauce replaceSauce(Enums.Sauce sauce) {
         List<Enums.Sauce> remainingSauces = new ArrayList<>(Arrays.asList(Enums.Sauce.values()));
         remainingSauces.remove(sauce);
@@ -66,6 +68,7 @@ public abstract class Pizza implements SysOut{
         return null;
     }
 
+    // Checks to make sure there are toppings that can be swapped by checking inventory;
     public Enums.Topping replaceTopping(Enums.Topping topping, List<Enums.Topping> preferredToppings) {
         List<Enums.Topping> remainingToppings = new ArrayList<>(Arrays.asList(Enums.Topping.values()));
         remainingToppings.remove(topping);
@@ -89,7 +92,10 @@ public abstract class Pizza implements SysOut{
         out("The person has no other choices and won't replace that topping!");
         return null;
     }
+
+    // Grabs the price of the pizza and reports it back to the user
     public double getPrice(List<Enums.Topping> toppings, Enums.Size pizzaSize, Enums.cookCond cond, Customer c) {
+        // Checking whether pizza is undercooked to apply 50% discount to the pizza.
         if (cond == Enums.cookCond.under_cooked) {
             if (pizzaSize == Enums.Size.small) {
                 double total = ((1.99 * toppings.size()) + 8.99) * 0.5;
@@ -104,7 +110,7 @@ public abstract class Pizza implements SysOut{
                 double total = ((1.99 * toppings.size()) + 17.99) * 0.5;
                 return total;
             }
-        } else {
+        } else { // Pizza isn't overcooked
             if (pizzaSize == Enums.Size.small) {
                 double total = ((1.99 * toppings.size()) + 8.99);
                 return total;
@@ -124,6 +130,7 @@ public abstract class Pizza implements SysOut{
 }
 
 class customerPizza extends Pizza {
+    // Creation of the customers pizza
     customerPizza(Map<Enums.Crust, Integer> crustsInventory, Map<Enums.Sauce, Integer> saucesInventory, Map<Enums.Topping, Integer> toppingsInventory) {
         super(crustsInventory, saucesInventory, toppingsInventory);
     }

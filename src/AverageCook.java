@@ -2,11 +2,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// Strategy pattern using Average cook
 public class AverageCook implements CookMethod, SysOut{
     public void cook(Pizza pizza, Customer c, Inventory i) {
         double rand1 = Math.random();
         double rand2 = Math.random();
 
+        // Determining the pizza quality which in turn changes the random tip that as awarded
         if (rand1 < 0.2) {
             pizza.setCond(Enums.cookCond.under_cooked);
             out("The pizza was sadly undercooked by our average chef and the person got a 50% discount off and no tip was given");
@@ -28,19 +30,23 @@ public class AverageCook implements CookMethod, SysOut{
             }
         }
 
+        // Chance of cook randomly using more ingredients due to overcooking or so on
         if (rand2 < 0.2) {
+            // random number of toppings being chosen from 1 to amount of toppings
             int randomTopNum = Utility.rndFromRange(1, c.prefTopping.size());
 
             List<Enums.Topping> shuffleList = new ArrayList<>(c.prefTopping);
             List<Enums.Topping> extraToppings = new ArrayList<>();
             Collections.shuffle(shuffleList);
 
+            // removes extra topping from the inventory
             for (int j = randomTopNum - 1; j >= 0; j--) {
                 i.removeInventory(shuffleList.get(j));
                 extraToppings.add(shuffleList.get(j));
                 shuffleList.remove(j);
             }
 
+            // Pushes out the toppings in a readable manner
             String toppingsList = String.join(", ", extraToppings.stream().map(Enum::toString).toArray(String[]::new));
             out("Sadly the average chef had a few problems and used up 1 extra of each of these ingredients: "+toppingsList);
         }

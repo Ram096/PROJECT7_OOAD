@@ -24,6 +24,7 @@ public class Customer implements SysOut {
         studentStat = getStudent();
     }
 
+    // Grabs a random number of toppings and then chooses that number of unique toppings and sets that as the customers preference
     public List<Enums.Topping> getToppings() {
         int rndToppingNum = Utility.rndFromRange(1, 7);
         List<Enums.Topping> availableToppings = new ArrayList<>(Arrays.asList(Enums.Topping.values()));
@@ -37,6 +38,7 @@ public class Customer implements SysOut {
         return selectedToppings;
     }
 
+    // Randomly determines whether the customer is a student or not
     public Enums.Student getStudent() {
         double rand = Utility.rnd();
         Enums.Student studentStat;
