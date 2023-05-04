@@ -1,4 +1,4 @@
-# PROJECT6_OOAD
+# PROJECT7_OOAD
 
 Members: Gustavo Guijarro, Ramy Kassam, Zachary Remer
 
