@@ -1,3 +1,16 @@
+// OrderData class & PizzaOrderDisplay
+/*
+The OrderData class implements the Subject interface, which defines methods for registering, removing, and notifying observers of changes to the subject.
+It maintains a list of observers, a list of orders, and an order number counter.
+It has methods to add orders, get the list of orders, get the total number of orders, and clear the orders.
+When a new order is added, it creates a message string and adds it to the list of orders, then calls the notifyObservers method to update all registered observers.
+
+The PizzaOrderDisplay class implements the Observer interface,
+which defines a single update method that is called when the subject notifies observers of changes.
+The PizzaOrderDisplay constructor takes a Subject object as a parameter and registers itself as an observer of that subject.
+When the update method is called, it simply displays the message on the console.
+ */
+
 import java.util.List;
 import java.util.ArrayList;
 
