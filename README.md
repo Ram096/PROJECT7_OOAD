@@ -11,4 +11,12 @@ Overall, the goal of Dough Masters code is to provide a convenient and efficient
 
 Since we are planning to develop a pizzeria simulation, having a text file where we store the output of our simulation will be helpful (just like the FNCD simulation). This text file would contain what occurs every day in the pizzeria, from orders being placed to buying more ingredients, to hiring new employees, etc. In order to have a more accurate system that simulates the efficiency of the shop and profits, the system should simulate 30 days. 
 
-In addition to our text file, to track the inventory of ingredients, a CSV file can be used. We could also implement a data storage from within our code directly by initializing all our ingredients and equipment, and updating it once certain ingredients are used in a pizza order just like the vehicle inventory in the FNCD project. Similarly, we could implement an ingredient threshold, where if it falls below that threshold more ingredients are ordered, which would cost the pizzeria money. 
+In addition, we implemented an app designed in Figma that includes a number of visual elements, including:
+
+    - A home screen or landing page: This would be the first screen users see when they open the app. It might include a prominent header or logo, as well as buttons or links to different parts of the app.
+
+    - A menu screen: This screen would likely include a list of available pizzas, along with prices, descriptions, and images. Users could browse the menu, add items to their cart, and customize their orders as needed.
+
+    - An order screen: Once users have selected the pizzas they want, they would move to an order screen. This might include a summary of the order, along with a form for users to enter their delivery or pickup information.
+
+    - A confirmation screen: Once the order is complete, users would see a confirmation screen that includes details about the order, estimated delivery or pickup time, and any other relevant information.
