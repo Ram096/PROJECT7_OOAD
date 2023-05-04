@@ -23,3 +23,15 @@ In addition, we implemented an app designed in Figma that includes a number of v
 
 
 Overall, we have successfully developed a Java-based pizza ordering and management system for a pizza store. Our project includes various features such as adding and updating pizzas, creating and managing orders, and generating reports. Our system utilizes object-oriented programming principles such as inheritance, encapsulation, and polymorphism to create a well-organized and modular codebase.
+
+
+Here are the steps to run the Java pizza store app in IntelliJ IDEA:
+
+    Open IntelliJ IDEA and open the project containing the pizza store code.
+    In the project directory, locate the main class file, which should be named "main.java".
+    Right-click on the main class file and select "Run 'main()'". This will run the main method in the PizzaStore class, which starts the pizza store application.
+    Alternatively, you can click on the green play button in the top right corner of the IntelliJ IDEA window and select "PizzaStore.main()" from the dropdown menu.
+    Once the application is running, you should see a simulator of our pizza store code. From here, you can navigate through the different tasks that our pizza store did during the simulation period.
+    
+
+Note that in order to run the app successfully, you'll need to ensure that you have all the necessary dependencies and configurations set up correctly. You may need to configure your IDE or build tool to include any external libraries or packages that the code depends on. Additionally, you may need to set up a database or other external resources that the app relies on.
