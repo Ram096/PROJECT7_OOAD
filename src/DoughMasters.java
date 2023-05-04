@@ -1,8 +1,17 @@
-// Dough Masters pizza class
 /*
-Dough Masters class represents the logistics of staff, inventory and pizza orders
+DoughMasters implements several instance variables, such as ArrayLists for storing staff and inventory, Maps for tracking toppings, sauces, and crusts inventory, and a budget variable. 
+It also has a constructor that initializes these instance variables and a few helper methods for manipulating them.
 
- */
+The main method in this class is "weekDays" and "weekendDays", 
+which represents the business activities of DoughMasters on weekdays and weekends, respectively. 
+These methods simulate a pizza store's operations by checking inventory and staff, hiring new staff if needed, and processing customer orders. 
+At the end of the day, the methods print out information about the completed orders, money spent, and the current inventory.
+Also, implementing a function called "startPizza" that takes a day of the week, a customer object, and an array list of staff members called cooks. 
+The function starts by extracting the customer's preferred crust, sauce, and toppings, as well as randomly selecting a cook from the array list of cooks. 
+It then prints a message describing the customer's preferences, including whether they are eligible for a student discount.
+Next, the function creates a new pizza object using the customer's crust and sauce preferences, and the inventory of available toppings. 
+It passes this pizza object, along with the customer and inventory objects, to the selected cook's makePizza method, which returns a boolean indicating whether the pizza was successfully made.
+*/
 import javax.security.sasl.SaslException;
 import javax.swing.*;
 import java.sql.Array;
