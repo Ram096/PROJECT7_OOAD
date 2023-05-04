@@ -1,7 +1,16 @@
 // Simulator to cycle for selected number of days
 /*
 Class Simulator implements the interface of the pizza store
+The class has three instance variables: numDays which is an integer that represents the number of days the simulation will run for;
+dayOfWeek which is an enumeration of type Enums.DayOfWeek that represents the current day of the week;
+and pizza which is an instance of the DoughMasters class.
+The constructor initializes the numDays variable to 30, and the dayOfWeek variable is randomly set to an enumeration value from Enums.DayOfWeek using the Utility.randomEnum() method.
 
+The getNextDay() method takes an enumeration value of type Enums.DayOfWeek as input and returns the next day of the week based on the input value.
+
+The run() method is the main method of the class.
+It prints some introductory messages, creates an instance of the DoughMasters class, and then loops through the simulation for numDays days.
+It checks the current day of the week and calls the appropriate method of the DoughMasters class depending on whether it is a weekday or weekend day.
  */
 
 
