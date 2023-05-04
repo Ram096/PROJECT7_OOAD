@@ -8,7 +8,7 @@ public class ManagerCreator implements StaffCreator {//setting up factory patter
     @Override
     public Staff createStaff() {
         Manager manager = new Manager();
-        manager.name = namer.getNext(); // set the mechanic's name
+        manager.name = namer.getNext(); // set the managers name
         return manager;
     }
 }

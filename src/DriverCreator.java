@@ -7,7 +7,7 @@ public class DriverCreator implements StaffCreator {//setting up factory pattern
     @Override
     public Staff createStaff() {
         Driver driver = new Driver();
-        driver.name = namer.getNext(); // set the intern's name
+        driver.name = namer.getNext(); // set the drivers name
         return driver;
     }
 }

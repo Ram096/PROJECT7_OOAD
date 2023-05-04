@@ -1,6 +1,6 @@
 //decorator class
-public abstract class PizzaDecorator implements PizzaDec {
-    public Pizza decoratedPizza;
+public abstract class PizzaDecorator implements PizzaDec { //decorator pattern for pizza add-ons, using pizza dec interface
+    public Pizza decoratedPizza; //constructors
     public PizzaDecorator(Pizza decoratedPizza){
         this.decoratedPizza = decoratedPizza;
     }
@@ -10,7 +10,7 @@ public abstract class PizzaDecorator implements PizzaDec {
 
 }
 //Concrete Decorator
-class MeatToppings extends PizzaDecorator{
+class MeatToppings extends PizzaDecorator{ //extra meat toppings add - on
     public MeatToppings(Pizza decoratedPizza){
         super(decoratedPizza);
     }
@@ -21,7 +21,7 @@ class MeatToppings extends PizzaDecorator{
 }
 
 //Concrete Decorator
-class ExtraCheese extends PizzaDecorator{
+class ExtraCheese extends PizzaDecorator{ //extra cheese add-on
     public ExtraCheese(Pizza decoratedPizza){
         super(decoratedPizza);
     }
@@ -32,7 +32,7 @@ class ExtraCheese extends PizzaDecorator{
 
 }
 //Concrete decorator
-class ExtraSauce extends PizzaDecorator{
+class ExtraSauce extends PizzaDecorator{ //extra sauce add-on
     public ExtraSauce(Pizza decoratedPizza){
         super(decoratedPizza);
     }
@@ -42,7 +42,7 @@ class ExtraSauce extends PizzaDecorator{
     }
 }
 //Last concrete decorator
-class FastOrder extends PizzaDecorator{
+class FastOrder extends PizzaDecorator{ //fast order add-on
     public FastOrder(Pizza decoratedPizza){
         super(decoratedPizza);
     }

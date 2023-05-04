@@ -168,12 +168,17 @@ public class DoughMasters implements SysOut {
         }
     }
 
-    void addStaff(Enums.StaffType t) {
+    void addStaff(Enums.StaffType t) { //adding the different types of staff to our simulation
         Staff newStaff = null;
-        if (t == Enums.StaffType.Cook) newStaff = new Cook();
-        if (t == Enums.StaffType.Cashier) newStaff = new Cashier();
-        if (t == Enums.StaffType.Driver) newStaff = new Driver();
-        if (t == Enums.StaffType.Manager) newStaff = new Manager();
+        CashierCreator cashierCreator = new CashierCreator();
+        CookCreator cookCreator = new CookCreator();
+        DriverCreator driverCreator = new DriverCreator();
+        ManagerCreator managerCreator = new ManagerCreator();
+
+        if (t == Enums.StaffType.Cook) newStaff = cookCreator.createStaff();
+        if (t == Enums.StaffType.Cashier) newStaff = cashierCreator.createStaff();
+        if (t == Enums.StaffType.Driver) newStaff = driverCreator.createStaff();
+        if (t == Enums.StaffType.Manager) newStaff = managerCreator.createStaff();
         out("Hired a new "+newStaff.type+" named "+ newStaff.name);
         staff.add(newStaff);
     }
@@ -208,7 +213,7 @@ public class DoughMasters implements SysOut {
             Cashier cashier = new Cashier();
             double rand = Utility.rnd();
             pizza.total = pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c); // Determining price of pizza
-            if (rand <= 0.65) { // User wants extra sauce
+            if (rand <= 0.65) { // User wants extra sauce, decorator pattern
                 out("Extra sauce for 2% of pizza total has been added! Old pizza total: " + Utility.asDollar(pizza.total));
                 ExtraSauce extraSauce = new ExtraSauce(pizza);
                 pizza.total = extraSauce.getPrice();
@@ -237,7 +242,7 @@ public class DoughMasters implements SysOut {
 
             } else if (rand <= .10) { // The user determined they wanted to do a fast order
                 out("Fast Order for 50% of pizza total has been added! Pizza order will now take priority and be made fast! Old pizza total: " + Utility.asDollar(pizza.total));
-                FastOrder fastOrder = new FastOrder(pizza);
+                FastOrder fastOrder = new FastOrder(pizza); //decorator pattern
                 out("This brings the total of the pizza to: " + pizza.total);
 
                 // Determining what cook made the pizza to apply the tip and/or discounts
@@ -261,9 +266,9 @@ public class DoughMasters implements SysOut {
                     out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
                 }
 
-            } else if (rand <= .15) { // Chose to add ectra meat on top of their pizza
+            } else if (rand <= .15) { // Chose to add extra meat on top of their pizza
                 out("Extra meat toppings for 20% of pizza total has been added! More sausage, bacon and pepperoni have been added Old pizza total: " + Utility.asDollar(pizza.total));
-                MeatToppings meatToppings = new MeatToppings(pizza);
+                MeatToppings meatToppings = new MeatToppings(pizza); //decorator pattern
                 out("This brings the total of the pizza to: " + Utility.asDollar(pizza.total));
 
                 // Determining which cook the user got to make their pizza
@@ -289,7 +294,7 @@ public class DoughMasters implements SysOut {
 
             } else if (rand <= .20) { // The user chose to add extra cheese to their pizza
                 out("Extra cheese for 10% of pizza total has been added! Old pizza total: " + Utility.asDollar(pizza.total));
-                ExtraCheese extraCheese = new ExtraCheese(pizza);
+                ExtraCheese extraCheese = new ExtraCheese(pizza); //decorator pattern
                 out("This brings the total of the pizza to: " + Utility.asDollar(pizza.total));
 
                 // Determining which cook made their pizza
@@ -321,21 +326,21 @@ public class DoughMasters implements SysOut {
                     badCook.cook(pizza, c, inventory);
                     pizza.total = pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c);
                     out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList);
-                    cashier.calculateOrderCost(pizza, c);
+                    cashier.calculateOrderCost(pizza, c); //cashier reads order total to customer
                     out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
                 } else if (cook.getCook() == Enums.cook.average_cook) {
                     AverageCook averageCook = new AverageCook();
                     averageCook.cook(pizza, c, inventory);
                     pizza.total = pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c);
                     out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList);
-                    cashier.calculateOrderCost(pizza, c);
+                    cashier.calculateOrderCost(pizza, c);//cashier reads order total to customer
                     out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
                 } else {
                     ExpertCook expertCook = new ExpertCook();
                     expertCook.cook(pizza, c, inventory);
                     pizza.total = pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c);
                     out("The customer " + c.name + " got a " + c.prefSize + " pizza, that has " + c.prefCrust + " crust, It has " + c.prefCrust + " sauce, with " + c.prefTopping.size() + " toppings being: " + toppingsList);
-                    cashier.calculateOrderCost(pizza, c);
+                    cashier.calculateOrderCost(pizza, c);//cashier reads order total to customer
                     out("Total pizza price + tip is: " + Utility.asDollar(pizza.total + pizza.tip));
                 }
             }

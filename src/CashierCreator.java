@@ -8,7 +8,7 @@ public class CashierCreator implements StaffCreator {//setting up factory patter
     @Override
     public Staff createStaff() {
         Cashier cashier = new Cashier();
-        cashier.name = namer.getNext(); // set the mechanic's name
+        cashier.name = namer.getNext(); // set the cashiers
         return cashier;
     }
 }

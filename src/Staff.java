@@ -51,12 +51,9 @@ public abstract class Staff implements SysOut {
 }
 
 class Manager extends Staff {
-    static List<String> names = Arrays.asList("Joel", "Harden", "Tyrese", "Ben");
-    static Namer namer = new Namer(names);
     Manager() {
         super();
         type = Enums.StaffType.Manager;
-        name = namer.getNext(); // Every new manager gets a new name
         salary = 150;
     }
 
@@ -128,13 +125,10 @@ class Manager extends Staff {
     //implement manager functions
 }
 class Cook extends Staff{
-    static List<String> names = Arrays.asList("Steph", "Klay", "Jordan", "Steve");
-    static Namer namer = new Namer(names);
     public Enums.cook cookExp;
     Cook(){
         super();
         type = Enums.StaffType.Cook;
-        name = namer.getNext(); // Every new cook gets a new name
         salary = 100;
         cookExp = getCook();
     }
@@ -219,36 +213,29 @@ class Cook extends Staff{
     //implement cook function
 }
 class Cashier extends Staff{
-    static List<String> names = Arrays.asList("Jason", "Sue", "Marcus", "Jimmy");
-    static Namer namer = new Namer(names);
     Cashier(){
         super();
         type = Enums.StaffType.Cashier;
-        name = namer.getNext();  // every new Cashier gets a new name
         salary = 75; // daily salary
     }
     //implement cashier function
-    public void calculateOrderCost(Pizza pizza, Customer c) {
-        List<Enums.Topping> toppings = c.prefTopping;
+    public void calculateOrderCost(Pizza pizza, Customer c) {//cashier will read order total to customer
         boolean pay = true;
         double totalCost = pizza.getPrice(c.prefTopping, c.prefSize, pizza.getCookCond(), c);
 
-        if(pay){
+        if(pay){ //if customer can pay
             out("Cashier: If there will be no more add-ons, your total will be: "+ Utility.asDollar(totalCost)+ " Thank you for ordering at Dough Masters!");
         }
-        else{
+        else{ //if customer cannot pay
             out("Sorry, your payment is insufficient. Your order cannot be completed.");
         }
 
     }
 }
 class Driver extends Staff {
-    static List<String> names = Arrays.asList("Anthony","Austin","Rui","James");
-    static Namer namer = new Namer(names);
     Driver() {
         super();
         type = Enums.StaffType.Driver;
-        name = namer.getNext();  // Every Driver gets a new name
         salary = 120; // daily salary
     }
     //add function for delivery orders

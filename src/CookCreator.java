@@ -8,7 +8,7 @@ public class CookCreator implements StaffCreator {//setting up factory pattern c
     @Override
     public Staff createStaff() {
         Cook cook = new Cook();
-        cook.name = namer.getNext(); // set the mechanic's name
+        cook.name = namer.getNext(); // set the cooks name
         return cook;
     }
 }
